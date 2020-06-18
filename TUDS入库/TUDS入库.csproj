@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{42C8FBBE-A28C-43D5-B365-1C3968081148}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TUDS入库</RootNamespace>
+    <AssemblyName>TUDS入库</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.18.3, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.18.3.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BUREAUDICT.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CAR_TYPE.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DEVICE_STATUS.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FAULT.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RECHECKS.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SCRAPE_DEVICE_STATUS.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SITES.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STATISTICS.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TRAIN.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TudsModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TudsModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TudsModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TudsModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TudsModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Uploader.cs" />
+    <Compile Include="VEHICLE.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WHEEL.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <EntityDeploy Include="TudsModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TudsModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TudsModel.edmx.diagram">
+      <DependentUpon>TudsModel.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TUDS报文接收\TUDS报文接收.csproj">
+      <Project>{79c2fee5-62e7-4fcd-a5db-fc26aef3cf02}</Project>
+      <Name>TUDS报文接收</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TUDS报文模型\TUDS报文模型.csproj">
+      <Project>{9683A032-4394-417F-9FC5-D7E2E80C6395}</Project>
+      <Name>TUDS报文模型</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\工具类\工具类.csproj">
+      <Project>{6f73e461-792c-429c-b98c-561d50695962}</Project>
+      <Name>工具类</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TudsModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TudsModel.Context.cs</LastGenOutput>
+      <DependentUpon>TudsModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="TudsModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TudsModel.edmx</DependentUpon>
+      <LastGenOutput>TudsModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

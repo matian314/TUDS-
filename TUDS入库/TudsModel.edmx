@@ -1,0 +1,1246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BUREAUDICT">
+          <Key>
+            <PropertyRef Name="BUREAU_ID" />
+          </Key>
+          <Property Name="BUREAU_ID" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="ABBR" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="SEQUENCE_NUMBER" Type="number" Precision="2" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAR_TYPE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="TYPE" Type="varchar2" MaxLength="20" />
+          <Property Name="AXLE_COUNT" Type="number" Precision="2" Scale="0" />
+          <Property Name="WHEEL_COUNT" Type="number" Precision="2" Scale="0" />
+          <Property Name="DIAMETER_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="DIAMETER_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="DIAMETER_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="DIAMETER_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="QR_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="QR_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="QR_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="QR_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="THREAD_WEAR_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="THREAD_WEAR_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="THREAD_WEAR_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="THREAD_WEAR_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="COXIAL_DIAM_DIFF_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="COXIAL_DIAM_DIFF_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="COXIAL_DIAM_DIFF_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="COXIAL_DIAM_DIFF_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAM_DIFF_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAM_DIFF_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAM_DIFF_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAM_DIFF_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAM_DIFF_UPPERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAM_DIFF_LOWERBOUND1" Type="number" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAM_DIFF_UPPERBOUND2" Type="number" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAM_DIFF_LOWERBOUND2" Type="number" Precision="7" Scale="3" />
+        </EntityType>
+        <EntityType Name="DEVICE_STATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="CHECK_TIME" Type="date" />
+          <Property Name="STATUS" Type="varchar2" MaxLength="1" />
+          <Property Name="LIQUID_LEVEL" Type="number" Precision="38" Scale="0" />
+          <Property Name="WATER_TEMPERATURE" Type="number" Precision="3" Scale="1" />
+          <Property Name="A_TEMPERATURE" Type="number" Precision="3" Scale="1" />
+          <Property Name="B_TEMPERATURE" Type="number" Precision="3" Scale="1" />
+          <Property Name="ENVIRONMENT_TEMPERATURE" Type="number" Precision="3" Scale="1" />
+          <Property Name="DISK_SPACE" Type="number" Precision="6" Scale="3" />
+          <Property Name="NEXT_CHECK_TIME" Type="date" />
+        </EntityType>
+        <EntityType Name="FAULT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="WHEEL_ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="ITEM" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="VALUE" Type="number" Precision="7" Scale="3" Nullable="false" />
+          <Property Name="ISRECHECKED" Type="number" Precision="1" Scale="0" Nullable="false" />
+          <Property Name="ALARM_LEVEL" Type="number" Precision="1" Scale="0" />
+        </EntityType>
+        <EntityType Name="RECHECKS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="FAULT_ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="HANDLER" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="SUGGESTION" Type="varchar2" MaxLength="400" Nullable="false" />
+          <Property Name="CONCLUSION" Type="varchar2" MaxLength="400" Nullable="false" />
+          <Property Name="TIME" Type="date" Nullable="false" />
+          <Property Name="VALUE" Type="number" Precision="7" Scale="3" />
+          <Property Name="RECHECK_PERSON" Type="varchar2" MaxLength="20" />
+          <Property Name="STATE" Type="varchar2" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="SCRAPE_DEVICE_STATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="TIME" Type="date" />
+          <Property Name="PLC" Type="varchar2" MaxLength="1" />
+          <Property Name="UPS" Type="varchar2" MaxLength="1" />
+          <Property Name="SENSOR1" Type="varchar2" MaxLength="1" />
+          <Property Name="SENSOR2" Type="varchar2" MaxLength="1" />
+          <Property Name="SENSOR3" Type="varchar2" MaxLength="1" />
+          <Property Name="SENSOR4" Type="varchar2" MaxLength="1" />
+          <Property Name="SENSOR5" Type="varchar2" MaxLength="1" />
+          <Property Name="SENSOR6" Type="varchar2" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SITES">
+          <Key>
+            <PropertyRef Name="SITE_ID" />
+          </Key>
+          <Property Name="SITE_ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="CODE" Type="varchar2" MaxLength="10" />
+          <Property Name="BUREAU_ID" Type="char" MaxLength="1" />
+          <Property Name="DEPOT_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="CHECK_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="PLANT_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="DEVICE_ID" Type="varchar2" MaxLength="36" />
+          <Property Name="FACTORY" Type="varchar2" MaxLength="40" />
+          <Property Name="DEVICE_NAME" Type="varchar2" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="STATISTICS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="YEAR" Type="number" Precision="4" Scale="0" />
+          <Property Name="MONTH" Type="number" Precision="2" Scale="0" />
+          <Property Name="SEASON" Type="number" Precision="2" Scale="0" />
+          <Property Name="DAY" Type="number" Precision="2" Scale="0" />
+          <Property Name="TRAIN_COUNT" Type="number" Precision="6" Scale="0" />
+          <Property Name="ALARM_COUNT" Type="number" Precision="6" Scale="0" />
+          <Property Name="DIMENSION_ALARM_COUNT" Type="number" Precision="6" Scale="0" />
+          <Property Name="INSPECTION_ALARM_COUNT" Type="number" Precision="6" Scale="0" />
+          <Property Name="SCRAPE_ALARM_COUNT" Type="number" Precision="6" Scale="0" />
+          <Property Name="ALARM_LEVEL1_COUNT" Type="number" Precision="6" Scale="0" />
+          <Property Name="ALARM_LEVEL2_COUNT" Type="number" Precision="6" Scale="0" />
+          <Property Name="ALARM_LEVEL3_COUNT" Type="number" Precision="6" Scale="0" />
+        </EntityType>
+        <EntityType Name="TRAIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="AXLE_COUNT" Type="number" Precision="2" Scale="0" />
+          <Property Name="DETECTION_TIME" Type="date" Nullable="false" />
+          <Property Name="BUREAUDICT_ID" Type="char" MaxLength="1" />
+          <Property Name="ALARM_LEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="INSPECTION_ALARM_LEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="SCRAPE_ALARM_LEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="DIMENSION_ALARM_LEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="DIAMETER_ALARM_LEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARM_LEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARM_LEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARM_LEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="QR_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="UNIT_NUMBER1" Type="varchar2" MaxLength="20" />
+          <Property Name="UNIT_NUMBER2" Type="varchar2" MaxLength="20" />
+          <Property Name="END_POSITION" Type="char" MaxLength="1" />
+          <Property Name="ARRIVE_SPEED" Type="number" Precision="5" Scale="2" />
+          <Property Name="LEAVE_SPEED" Type="number" Precision="5" Scale="2" />
+          <Property Name="SITE_ID" Type="varchar2" MaxLength="36" />
+          <Property Name="ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="INSPECTION_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="INSPECTION_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="SCRAPE_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="SCRAPE_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="THREADWEAR_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="THREADWEAR_ALRAM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="THREADWEAR_ALRAM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIMENSION_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIMENSION_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIAMETER_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIAMETER_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="QR_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="QR_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="OPERATOR" Type="varchar2" MaxLength="20" />
+          <Property Name="LAST_CHECK_ID" Type="varchar2" MaxLength="36" />
+          <Property Name="CHECKED" Type="number" Precision="1" Scale="0" />
+          <Property Name="MAX_SPEED" Type="number" Precision="4" Scale="2" />
+          <Property Name="MIN_SPEED" Type="number" Precision="4" Scale="2" />
+          <Property Name="TRAIN_TYPE" Type="varchar2" MaxLength="1" />
+          <Property Name="VEHICLE_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="LOCOMOTIVE_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="TRAIN_NO" Type="varchar2" MaxLength="10" />
+          <Property Name="ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="INSPECTION_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="SCRAPE_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="THREADWEAR_ALRAM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIMENSION_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIAMETER_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="QR_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+        </EntityType>
+        <EntityType Name="VEHICLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="TRAIN_ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="UNIT_NUMBER" Type="varchar2" MaxLength="20" />
+          <Property Name="COACH_NUMBER" Type="varchar2" MaxLength="20" />
+          <Property Name="PASS_ORDER" Type="number" Precision="2" Scale="0" />
+          <Property Name="ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="INSPECTION_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="SCRAPE_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="DIMENSION_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="DIAMETER_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="QR_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="INSPECTION_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="INSPECTION_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="SCRAPE_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="SCRAPE_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="THREADWEAR_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="THREADWEAR_ALRAM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="THREADWEAR_ALRAM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIMENSION_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIMENSION_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIAMETER_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIAMETER_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="QR_ALARM1_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="QR_ALARM2_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="IS_LOCOMOTIVE" Type="number" Precision="1" Scale="0" />
+          <Property Name="CAR_TYPE_ID" Type="varchar2" MaxLength="36" />
+          <Property Name="AEI_END_DIRECTION" Type="varchar2" MaxLength="1" />
+          <Property Name="ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="INSPECTION_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="SCRAPE_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="THREADWEAR_ALRAM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIMENSION_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="DIAMETER_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+          <Property Name="QR_ALARM3_COUNT" Type="number" Precision="3" Scale="0" />
+        </EntityType>
+        <EntityType Name="WHEEL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="VEHICLE_ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="POSITION" Type="varchar2" MaxLength="6" />
+          <Property Name="AXLE_POSITION" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="INSPECTION_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="SCRAPE_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="DIMENSION_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="DIAMETER_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="FLANGE_THICKNESS_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="FLANGE_HEIGHT_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="RIM_THICKNESS_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="QR_ALARMLEVEL" Type="number" Precision="2" Scale="0" />
+          <Property Name="DIAMETER" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS" Type="number" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT" Type="number" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS" Type="number" Precision="7" Scale="3" />
+          <Property Name="QR" Type="number" Precision="7" Scale="3" />
+          <Property Name="COAXIAL_DIAMETER_DIFFERENCE" Type="number" Precision="7" Scale="3" />
+          <Property Name="TREAD_WEAR" Type="number" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE" Type="number" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAMETER_DIFFERENCE" Type="number" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAMETER_DIFFERENCE" Type="number" Precision="7" Scale="3" />
+          <Property Name="PASS_SPEED" Type="number" Precision="7" Scale="3" />
+          <Property Name="ROUND" Type="number" Precision="7" Scale="3" />
+          <Property Name="MAX_BRUISE_LENGTH" Type="number" Precision="7" Scale="3" />
+          <Property Name="MAX_BRUISE_DEPTH" Type="number" Precision="7" Scale="3" />
+          <Property Name="MAX_DIAMETER" Type="number" Precision="7" Scale="3" />
+          <Property Name="MIN_DIAMETER" Type="number" Precision="7" Scale="3" />
+          <Property Name="WHEEL_ORDER" Type="number" Precision="3" Scale="0" />
+          <Property Name="ET" Type="number" Precision="7" Scale="3" />
+          <Property Name="OR_VALUE" Type="number" Precision="7" Scale="3" />
+        </EntityType>
+        <Association Name="FAULT_WHEEL_FK">
+          <End Role="WHEEL" Type="Self.WHEEL" Multiplicity="1" />
+          <End Role="FAULT" Type="Self.FAULT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WHEEL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FAULT">
+              <PropertyRef Name="WHEEL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RECHECK_FAULT_ID">
+          <End Role="FAULT" Type="Self.FAULT" Multiplicity="1" />
+          <End Role="RECHECKS" Type="Self.RECHECKS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FAULT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RECHECKS">
+              <PropertyRef Name="FAULT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAIN_BUREAU_FK">
+          <End Role="BUREAUDICT" Type="Self.BUREAUDICT" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TRAIN" Type="Self.TRAIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BUREAUDICT">
+              <PropertyRef Name="BUREAU_ID" />
+            </Principal>
+            <Dependent Role="TRAIN">
+              <PropertyRef Name="BUREAUDICT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAIN_SITE_FK">
+          <End Role="SITES" Type="Self.SITES" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TRAIN" Type="Self.TRAIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SITES">
+              <PropertyRef Name="SITE_ID" />
+            </Principal>
+            <Dependent Role="TRAIN">
+              <PropertyRef Name="SITE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VEHICLE_CAR_TYPE_FK">
+          <End Role="CAR_TYPE" Type="Self.CAR_TYPE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VEHICLE" Type="Self.VEHICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAR_TYPE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VEHICLE">
+              <PropertyRef Name="CAR_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VEHICLE_TRAIN_FK">
+          <End Role="TRAIN" Type="Self.TRAIN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VEHICLE" Type="Self.VEHICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAIN">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VEHICLE">
+              <PropertyRef Name="TRAIN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WHEEL_VEHICLE_FK">
+          <End Role="VEHICLE" Type="Self.VEHICLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WHEEL" Type="Self.WHEEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WHEEL">
+              <PropertyRef Name="VEHICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="BUREAUDICT" EntityType="Self.BUREAUDICT" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="CAR_TYPE" EntityType="Self.CAR_TYPE" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="DEVICE_STATUS" EntityType="Self.DEVICE_STATUS" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="FAULT" EntityType="Self.FAULT" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="RECHECKS" EntityType="Self.RECHECKS" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="SCRAPE_DEVICE_STATUS" EntityType="Self.SCRAPE_DEVICE_STATUS" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="SITES" EntityType="Self.SITES" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="STATISTICS" EntityType="Self.STATISTICS" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="TRAIN" EntityType="Self.TRAIN" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="VEHICLE" EntityType="Self.VEHICLE" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="WHEEL" EntityType="Self.WHEEL" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <AssociationSet Name="FAULT_WHEEL_FK" Association="Self.FAULT_WHEEL_FK">
+            <End Role="WHEEL" EntitySet="WHEEL" />
+            <End Role="FAULT" EntitySet="FAULT" />
+          </AssociationSet>
+          <AssociationSet Name="RECHECK_FAULT_ID" Association="Self.RECHECK_FAULT_ID">
+            <End Role="FAULT" EntitySet="FAULT" />
+            <End Role="RECHECKS" EntitySet="RECHECKS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAIN_BUREAU_FK" Association="Self.TRAIN_BUREAU_FK">
+            <End Role="BUREAUDICT" EntitySet="BUREAUDICT" />
+            <End Role="TRAIN" EntitySet="TRAIN" />
+          </AssociationSet>
+          <AssociationSet Name="TRAIN_SITE_FK" Association="Self.TRAIN_SITE_FK">
+            <End Role="SITES" EntitySet="SITES" />
+            <End Role="TRAIN" EntitySet="TRAIN" />
+          </AssociationSet>
+          <AssociationSet Name="VEHICLE_CAR_TYPE_FK" Association="Self.VEHICLE_CAR_TYPE_FK">
+            <End Role="CAR_TYPE" EntitySet="CAR_TYPE" />
+            <End Role="VEHICLE" EntitySet="VEHICLE" />
+          </AssociationSet>
+          <AssociationSet Name="VEHICLE_TRAIN_FK" Association="Self.VEHICLE_TRAIN_FK">
+            <End Role="TRAIN" EntitySet="TRAIN" />
+            <End Role="VEHICLE" EntitySet="VEHICLE" />
+          </AssociationSet>
+          <AssociationSet Name="WHEEL_VEHICLE_FK" Association="Self.WHEEL_VEHICLE_FK">
+            <End Role="VEHICLE" EntitySet="VEHICLE" />
+            <End Role="WHEEL" EntitySet="WHEEL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BUREAUDICT">
+          <Key>
+            <PropertyRef Name="BUREAU_ID" />
+          </Key>
+          <Property Name="BUREAU_ID" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ABBR" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SEQUENCE_NUMBER" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="TRAIN" Relationship="Self.TRAIN_BUREAU_FK" FromRole="BUREAUDICT" ToRole="TRAIN" />
+        </EntityType>
+        <EntityType Name="CAR_TYPE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AXLE_COUNT" Type="Int16" />
+          <Property Name="WHEEL_COUNT" Type="Int16" />
+          <Property Name="DIAMETER_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="DIAMETER_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="DIAMETER_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="DIAMETER_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="QR_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="QR_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="QR_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="QR_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="THREAD_WEAR_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="THREAD_WEAR_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="THREAD_WEAR_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="THREAD_WEAR_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="COXIAL_DIAM_DIFF_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="COXIAL_DIAM_DIFF_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="COXIAL_DIAM_DIFF_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="COXIAL_DIAM_DIFF_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAM_DIFF_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAM_DIFF_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAM_DIFF_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAM_DIFF_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAM_DIFF_UPPERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAM_DIFF_LOWERBOUND1" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAM_DIFF_UPPERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAM_DIFF_LOWERBOUND2" Type="Decimal" Precision="7" Scale="3" />
+          <NavigationProperty Name="VEHICLE" Relationship="Self.VEHICLE_CAR_TYPE_FK" FromRole="CAR_TYPE" ToRole="VEHICLE" />
+        </EntityType>
+        <EntityType Name="DEVICE_STATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CHECK_TIME" Type="DateTime" />
+          <Property Name="STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="LIQUID_LEVEL" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="WATER_TEMPERATURE" Type="Decimal" Precision="3" Scale="1" />
+          <Property Name="A_TEMPERATURE" Type="Decimal" Precision="3" Scale="1" />
+          <Property Name="B_TEMPERATURE" Type="Decimal" Precision="3" Scale="1" />
+          <Property Name="ENVIRONMENT_TEMPERATURE" Type="Decimal" Precision="3" Scale="1" />
+          <Property Name="DISK_SPACE" Type="Decimal" Precision="6" Scale="3" />
+          <Property Name="NEXT_CHECK_TIME" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="FAULT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WHEEL_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ITEM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VALUE" Type="Decimal" Precision="7" Scale="3" Nullable="false" />
+          <Property Name="ISRECHECKED" Type="Int16" Nullable="false" />
+          <Property Name="ALARM_LEVEL" Type="Int16" />
+          <NavigationProperty Name="WHEEL" Relationship="Self.FAULT_WHEEL_FK" FromRole="FAULT" ToRole="WHEEL" />
+          <NavigationProperty Name="RECHECKS" Relationship="Self.RECHECK_FAULT_ID" FromRole="FAULT" ToRole="RECHECKS" />
+        </EntityType>
+        <EntityType Name="RECHECKS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FAULT_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HANDLER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SUGGESTION" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CONCLUSION" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TIME" Type="DateTime" Nullable="false" />
+          <Property Name="VALUE" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="RECHECK_PERSON" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="STATE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FAULT" Relationship="Self.RECHECK_FAULT_ID" FromRole="RECHECKS" ToRole="FAULT" />
+        </EntityType>
+        <EntityType Name="SCRAPE_DEVICE_STATUS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TIME" Type="DateTime" />
+          <Property Name="PLC" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UPS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SENSOR1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SENSOR2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SENSOR3" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SENSOR4" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SENSOR5" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SENSOR6" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SITES">
+          <Key>
+            <PropertyRef Name="SITE_ID" />
+          </Key>
+          <Property Name="SITE_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BUREAU_ID" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DEPOT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CHECK_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PLANT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DEVICE_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="FACTORY" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DEVICE_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TRAIN" Relationship="Self.TRAIN_SITE_FK" FromRole="SITES" ToRole="TRAIN" />
+        </EntityType>
+        <EntityType Name="STATISTICS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YEAR" Type="Int16" />
+          <Property Name="MONTH" Type="Int16" />
+          <Property Name="SEASON" Type="Int16" />
+          <Property Name="DAY" Type="Int16" />
+          <Property Name="TRAIN_COUNT" Type="Int32" />
+          <Property Name="ALARM_COUNT" Type="Int32" />
+          <Property Name="DIMENSION_ALARM_COUNT" Type="Int32" />
+          <Property Name="INSPECTION_ALARM_COUNT" Type="Int32" />
+          <Property Name="SCRAPE_ALARM_COUNT" Type="Int32" />
+          <Property Name="ALARM_LEVEL1_COUNT" Type="Int32" />
+          <Property Name="ALARM_LEVEL2_COUNT" Type="Int32" />
+          <Property Name="ALARM_LEVEL3_COUNT" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TRAIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="AXLE_COUNT" Type="Int16" />
+          <Property Name="DETECTION_TIME" Type="DateTime" Nullable="false" />
+          <Property Name="BUREAUDICT_ID" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ALARM_LEVEL" Type="Int16" />
+          <Property Name="INSPECTION_ALARM_LEVEL" Type="Int16" />
+          <Property Name="SCRAPE_ALARM_LEVEL" Type="Int16" />
+          <Property Name="DIMENSION_ALARM_LEVEL" Type="Int16" />
+          <Property Name="DIAMETER_ALARM_LEVEL" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARM_LEVEL" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARM_LEVEL" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARM_LEVEL" Type="Int16" />
+          <Property Name="QR_ALARMLEVEL" Type="Int16" />
+          <Property Name="UNIT_NUMBER1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UNIT_NUMBER2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="END_POSITION" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ARRIVE_SPEED" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="LEAVE_SPEED" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="SITE_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="ALARM1_COUNT" Type="Int16" />
+          <Property Name="ALARM2_COUNT" Type="Int16" />
+          <Property Name="INSPECTION_ALARM1_COUNT" Type="Int16" />
+          <Property Name="INSPECTION_ALARM2_COUNT" Type="Int16" />
+          <Property Name="SCRAPE_ALARM1_COUNT" Type="Int16" />
+          <Property Name="SCRAPE_ALARM2_COUNT" Type="Int16" />
+          <Property Name="THREADWEAR_ALARMLEVEL" Type="Int16" />
+          <Property Name="THREADWEAR_ALRAM1_COUNT" Type="Int16" />
+          <Property Name="THREADWEAR_ALRAM2_COUNT" Type="Int16" />
+          <Property Name="DIMENSION_ALARM1_COUNT" Type="Int16" />
+          <Property Name="DIMENSION_ALARM2_COUNT" Type="Int16" />
+          <Property Name="DIAMETER_ALARM1_COUNT" Type="Int16" />
+          <Property Name="DIAMETER_ALARM2_COUNT" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARM1_COUNT" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARM2_COUNT" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARM1_COUNT" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARM2_COUNT" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARM1_COUNT" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARM2_COUNT" Type="Int16" />
+          <Property Name="QR_ALARM1_COUNT" Type="Int16" />
+          <Property Name="QR_ALARM2_COUNT" Type="Int16" />
+          <Property Name="OPERATOR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_CHECK_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="CHECKED" Type="Int16" />
+          <Property Name="MAX_SPEED" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="MIN_SPEED" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="TRAIN_TYPE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_COUNT" Type="Int16" />
+          <Property Name="LOCOMOTIVE_COUNT" Type="Int16" />
+          <Property Name="TRAIN_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ALARM3_COUNT" Type="Int16" />
+          <Property Name="INSPECTION_ALARM3_COUNT" Type="Int16" />
+          <Property Name="SCRAPE_ALARM3_COUNT" Type="Int16" />
+          <Property Name="THREADWEAR_ALRAM3_COUNT" Type="Int16" />
+          <Property Name="DIMENSION_ALARM3_COUNT" Type="Int16" />
+          <Property Name="DIAMETER_ALARM3_COUNT" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARM3_COUNT" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARM3_COUNT" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARM3_COUNT" Type="Int16" />
+          <Property Name="QR_ALARM3_COUNT" Type="Int16" />
+          <NavigationProperty Name="BUREAUDICT" Relationship="Self.TRAIN_BUREAU_FK" FromRole="TRAIN" ToRole="BUREAUDICT" />
+          <NavigationProperty Name="SITES" Relationship="Self.TRAIN_SITE_FK" FromRole="TRAIN" ToRole="SITES" />
+          <NavigationProperty Name="VEHICLE" Relationship="Self.VEHICLE_TRAIN_FK" FromRole="TRAIN" ToRole="VEHICLE" />
+        </EntityType>
+        <EntityType Name="VEHICLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TRAIN_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UNIT_NUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="COACH_NUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PASS_ORDER" Type="Int16" />
+          <Property Name="ALARMLEVEL" Type="Int16" />
+          <Property Name="INSPECTION_ALARMLEVEL" Type="Int16" />
+          <Property Name="SCRAPE_ALARMLEVEL" Type="Int16" />
+          <Property Name="DIMENSION_ALARMLEVEL" Type="Int16" />
+          <Property Name="DIAMETER_ALARMLEVEL" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARMLEVEL" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARMLEVEL" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARMLEVEL" Type="Int16" />
+          <Property Name="QR_ALARMLEVEL" Type="Int16" />
+          <Property Name="ALARM1_COUNT" Type="Int16" />
+          <Property Name="ALARM2_COUNT" Type="Int16" />
+          <Property Name="INSPECTION_ALARM1_COUNT" Type="Int16" />
+          <Property Name="INSPECTION_ALARM2_COUNT" Type="Int16" />
+          <Property Name="SCRAPE_ALARM1_COUNT" Type="Int16" />
+          <Property Name="SCRAPE_ALARM2_COUNT" Type="Int16" />
+          <Property Name="THREADWEAR_ALARMLEVEL" Type="Int16" />
+          <Property Name="THREADWEAR_ALRAM1_COUNT" Type="Int16" />
+          <Property Name="THREADWEAR_ALRAM2_COUNT" Type="Int16" />
+          <Property Name="DIMENSION_ALARM1_COUNT" Type="Int16" />
+          <Property Name="DIMENSION_ALARM2_COUNT" Type="Int16" />
+          <Property Name="DIAMETER_ALARM1_COUNT" Type="Int16" />
+          <Property Name="DIAMETER_ALARM2_COUNT" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARM1_COUNT" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARM2_COUNT" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARM1_COUNT" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARM2_COUNT" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARM1_COUNT" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARM2_COUNT" Type="Int16" />
+          <Property Name="QR_ALARM1_COUNT" Type="Int16" />
+          <Property Name="QR_ALARM2_COUNT" Type="Int16" />
+          <Property Name="IS_LOCOMOTIVE" Type="Int16" />
+          <Property Name="CAR_TYPE_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="AEI_END_DIRECTION" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ALARM3_COUNT" Type="Int16" />
+          <Property Name="INSPECTION_ALARM3_COUNT" Type="Int16" />
+          <Property Name="SCRAPE_ALARM3_COUNT" Type="Int16" />
+          <Property Name="THREADWEAR_ALRAM3_COUNT" Type="Int16" />
+          <Property Name="DIMENSION_ALARM3_COUNT" Type="Int16" />
+          <Property Name="DIAMETER_ALARM3_COUNT" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARM3_COUNT" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARM3_COUNT" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARM3_COUNT" Type="Int16" />
+          <Property Name="QR_ALARM3_COUNT" Type="Int16" />
+          <NavigationProperty Name="CAR_TYPE" Relationship="Self.VEHICLE_CAR_TYPE_FK" FromRole="VEHICLE" ToRole="CAR_TYPE" />
+          <NavigationProperty Name="TRAIN" Relationship="Self.VEHICLE_TRAIN_FK" FromRole="VEHICLE" ToRole="TRAIN" />
+          <NavigationProperty Name="WHEEL" Relationship="Self.WHEEL_VEHICLE_FK" FromRole="VEHICLE" ToRole="WHEEL" />
+        </EntityType>
+        <EntityType Name="WHEEL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_ID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="POSITION" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="AXLE_POSITION" Type="Int16" Nullable="false" />
+          <Property Name="ALARMLEVEL" Type="Int16" />
+          <Property Name="INSPECTION_ALARMLEVEL" Type="Int16" />
+          <Property Name="SCRAPE_ALARMLEVEL" Type="Int16" />
+          <Property Name="DIMENSION_ALARMLEVEL" Type="Int16" />
+          <Property Name="DIAMETER_ALARMLEVEL" Type="Int16" />
+          <Property Name="FLANGE_THICKNESS_ALARMLEVEL" Type="Int16" />
+          <Property Name="FLANGE_HEIGHT_ALARMLEVEL" Type="Int16" />
+          <Property Name="RIM_THICKNESS_ALARMLEVEL" Type="Int16" />
+          <Property Name="QR_ALARMLEVEL" Type="Int16" />
+          <Property Name="DIAMETER" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_THICKNESS" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="FLANGE_HEIGHT" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="RIM_THICKNESS" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="QR" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="COAXIAL_DIAMETER_DIFFERENCE" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="TREAD_WEAR" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="WHEELSET_DISTANCE" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="BOGIE_DIAMETER_DIFFERENCE" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="VEHICLE_DIAMETER_DIFFERENCE" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="PASS_SPEED" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="ROUND" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="MAX_BRUISE_LENGTH" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="MAX_BRUISE_DEPTH" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="MAX_DIAMETER" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="MIN_DIAMETER" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="WHEEL_ORDER" Type="Int16" />
+          <Property Name="ET" Type="Decimal" Precision="7" Scale="3" />
+          <Property Name="OR_VALUE" Type="Decimal" Precision="7" Scale="3" />
+          <NavigationProperty Name="FAULT" Relationship="Self.FAULT_WHEEL_FK" FromRole="WHEEL" ToRole="FAULT" />
+          <NavigationProperty Name="VEHICLE" Relationship="Self.WHEEL_VEHICLE_FK" FromRole="WHEEL" ToRole="VEHICLE" />
+        </EntityType>
+        <Association Name="TRAIN_BUREAU_FK">
+          <End Role="BUREAUDICT" Type="Self.BUREAUDICT" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TRAIN" Type="Self.TRAIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BUREAUDICT">
+              <PropertyRef Name="BUREAU_ID" />
+            </Principal>
+            <Dependent Role="TRAIN">
+              <PropertyRef Name="BUREAUDICT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VEHICLE_CAR_TYPE_FK">
+          <End Role="CAR_TYPE" Type="Self.CAR_TYPE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VEHICLE" Type="Self.VEHICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAR_TYPE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VEHICLE">
+              <PropertyRef Name="CAR_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FAULT_WHEEL_FK">
+          <End Role="WHEEL" Type="Self.WHEEL" Multiplicity="1" />
+          <End Role="FAULT" Type="Self.FAULT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WHEEL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FAULT">
+              <PropertyRef Name="WHEEL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RECHECK_FAULT_ID">
+          <End Role="FAULT" Type="Self.FAULT" Multiplicity="1" />
+          <End Role="RECHECKS" Type="Self.RECHECKS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FAULT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RECHECKS">
+              <PropertyRef Name="FAULT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAIN_SITE_FK">
+          <End Role="SITES" Type="Self.SITES" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TRAIN" Type="Self.TRAIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SITES">
+              <PropertyRef Name="SITE_ID" />
+            </Principal>
+            <Dependent Role="TRAIN">
+              <PropertyRef Name="SITE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VEHICLE_TRAIN_FK">
+          <End Role="TRAIN" Type="Self.TRAIN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VEHICLE" Type="Self.VEHICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAIN">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VEHICLE">
+              <PropertyRef Name="TRAIN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WHEEL_VEHICLE_FK">
+          <End Role="VEHICLE" Type="Self.VEHICLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WHEEL" Type="Self.WHEEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WHEEL">
+              <PropertyRef Name="VEHICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TudsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BUREAUDICT" EntityType="Self.BUREAUDICT" />
+          <EntitySet Name="CAR_TYPE" EntityType="Self.CAR_TYPE" />
+          <EntitySet Name="DEVICE_STATUS" EntityType="Self.DEVICE_STATUS" />
+          <EntitySet Name="FAULT" EntityType="Self.FAULT" />
+          <EntitySet Name="RECHECKS" EntityType="Self.RECHECKS" />
+          <EntitySet Name="SCRAPE_DEVICE_STATUS" EntityType="Self.SCRAPE_DEVICE_STATUS" />
+          <EntitySet Name="SITES" EntityType="Self.SITES" />
+          <EntitySet Name="STATISTICS" EntityType="Self.STATISTICS" />
+          <EntitySet Name="TRAIN" EntityType="Self.TRAIN" />
+          <EntitySet Name="VEHICLE" EntityType="Self.VEHICLE" />
+          <EntitySet Name="WHEEL" EntityType="Self.WHEEL" />
+          <AssociationSet Name="TRAIN_BUREAU_FK" Association="Self.TRAIN_BUREAU_FK">
+            <End Role="BUREAUDICT" EntitySet="BUREAUDICT" />
+            <End Role="TRAIN" EntitySet="TRAIN" />
+          </AssociationSet>
+          <AssociationSet Name="VEHICLE_CAR_TYPE_FK" Association="Self.VEHICLE_CAR_TYPE_FK">
+            <End Role="CAR_TYPE" EntitySet="CAR_TYPE" />
+            <End Role="VEHICLE" EntitySet="VEHICLE" />
+          </AssociationSet>
+          <AssociationSet Name="FAULT_WHEEL_FK" Association="Self.FAULT_WHEEL_FK">
+            <End Role="WHEEL" EntitySet="WHEEL" />
+            <End Role="FAULT" EntitySet="FAULT" />
+          </AssociationSet>
+          <AssociationSet Name="RECHECK_FAULT_ID" Association="Self.RECHECK_FAULT_ID">
+            <End Role="FAULT" EntitySet="FAULT" />
+            <End Role="RECHECKS" EntitySet="RECHECKS" />
+          </AssociationSet>
+          <AssociationSet Name="TRAIN_SITE_FK" Association="Self.TRAIN_SITE_FK">
+            <End Role="SITES" EntitySet="SITES" />
+            <End Role="TRAIN" EntitySet="TRAIN" />
+          </AssociationSet>
+          <AssociationSet Name="VEHICLE_TRAIN_FK" Association="Self.VEHICLE_TRAIN_FK">
+            <End Role="TRAIN" EntitySet="TRAIN" />
+            <End Role="VEHICLE" EntitySet="VEHICLE" />
+          </AssociationSet>
+          <AssociationSet Name="WHEEL_VEHICLE_FK" Association="Self.WHEEL_VEHICLE_FK">
+            <End Role="VEHICLE" EntitySet="VEHICLE" />
+            <End Role="WHEEL" EntitySet="WHEEL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="TudsEntities">
+          <EntitySetMapping Name="BUREAUDICT">
+            <EntityTypeMapping TypeName="Model.BUREAUDICT">
+              <MappingFragment StoreEntitySet="BUREAUDICT">
+                <ScalarProperty Name="BUREAU_ID" ColumnName="BUREAU_ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="ABBR" ColumnName="ABBR" />
+                <ScalarProperty Name="SEQUENCE_NUMBER" ColumnName="SEQUENCE_NUMBER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAR_TYPE">
+            <EntityTypeMapping TypeName="Model.CAR_TYPE">
+              <MappingFragment StoreEntitySet="CAR_TYPE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="AXLE_COUNT" ColumnName="AXLE_COUNT" />
+                <ScalarProperty Name="WHEEL_COUNT" ColumnName="WHEEL_COUNT" />
+                <ScalarProperty Name="DIAMETER_UPPERBOUND1" ColumnName="DIAMETER_UPPERBOUND1" />
+                <ScalarProperty Name="DIAMETER_LOWERBOUND1" ColumnName="DIAMETER_LOWERBOUND1" />
+                <ScalarProperty Name="DIAMETER_UPPERBOUND2" ColumnName="DIAMETER_UPPERBOUND2" />
+                <ScalarProperty Name="DIAMETER_LOWERBOUND2" ColumnName="DIAMETER_LOWERBOUND2" />
+                <ScalarProperty Name="FLANGE_THICKNESS_UPPERBOUND1" ColumnName="FLANGE_THICKNESS_UPPERBOUND1" />
+                <ScalarProperty Name="FLANGE_THICKNESS_LOWERBOUND1" ColumnName="FLANGE_THICKNESS_LOWERBOUND1" />
+                <ScalarProperty Name="FLANGE_THICKNESS_UPPERBOUND2" ColumnName="FLANGE_THICKNESS_UPPERBOUND2" />
+                <ScalarProperty Name="FLANGE_THICKNESS_LOWERBOUND2" ColumnName="FLANGE_THICKNESS_LOWERBOUND2" />
+                <ScalarProperty Name="FLANGE_HEIGHT_UPPERBOUND1" ColumnName="FLANGE_HEIGHT_UPPERBOUND1" />
+                <ScalarProperty Name="FLANGE_HEIGHT_LOWERBOUND1" ColumnName="FLANGE_HEIGHT_LOWERBOUND1" />
+                <ScalarProperty Name="FLANGE_HEIGHT_UPPERBOUND2" ColumnName="FLANGE_HEIGHT_UPPERBOUND2" />
+                <ScalarProperty Name="FLANGE_HEIGHT_LOWERBOUND2" ColumnName="FLANGE_HEIGHT_LOWERBOUND2" />
+                <ScalarProperty Name="RIM_THICKNESS_UPPERBOUND1" ColumnName="RIM_THICKNESS_UPPERBOUND1" />
+                <ScalarProperty Name="RIM_THICKNESS_LOWERBOUND1" ColumnName="RIM_THICKNESS_LOWERBOUND1" />
+                <ScalarProperty Name="RIM_THICKNESS_UPPERBOUND2" ColumnName="RIM_THICKNESS_UPPERBOUND2" />
+                <ScalarProperty Name="RIM_THICKNESS_LOWERBOUND2" ColumnName="RIM_THICKNESS_LOWERBOUND2" />
+                <ScalarProperty Name="QR_UPPERBOUND1" ColumnName="QR_UPPERBOUND1" />
+                <ScalarProperty Name="QR_LOWERBOUND1" ColumnName="QR_LOWERBOUND1" />
+                <ScalarProperty Name="QR_UPPERBOUND2" ColumnName="QR_UPPERBOUND2" />
+                <ScalarProperty Name="QR_LOWERBOUND2" ColumnName="QR_LOWERBOUND2" />
+                <ScalarProperty Name="THREAD_WEAR_UPPERBOUND1" ColumnName="THREAD_WEAR_UPPERBOUND1" />
+                <ScalarProperty Name="THREAD_WEAR_LOWERBOUND1" ColumnName="THREAD_WEAR_LOWERBOUND1" />
+                <ScalarProperty Name="THREAD_WEAR_UPPERBOUND2" ColumnName="THREAD_WEAR_UPPERBOUND2" />
+                <ScalarProperty Name="THREAD_WEAR_LOWERBOUND2" ColumnName="THREAD_WEAR_LOWERBOUND2" />
+                <ScalarProperty Name="COXIAL_DIAM_DIFF_UPPERBOUND1" ColumnName="COXIAL_DIAM_DIFF_UPPERBOUND1" />
+                <ScalarProperty Name="COXIAL_DIAM_DIFF_LOWERBOUND1" ColumnName="COXIAL_DIAM_DIFF_LOWERBOUND1" />
+                <ScalarProperty Name="COXIAL_DIAM_DIFF_UPPERBOUND2" ColumnName="COXIAL_DIAM_DIFF_UPPERBOUND2" />
+                <ScalarProperty Name="COXIAL_DIAM_DIFF_LOWERBOUND2" ColumnName="COXIAL_DIAM_DIFF_LOWERBOUND2" />
+                <ScalarProperty Name="WHEELSET_DISTANCE_UPPERBOUND1" ColumnName="WHEELSET_DISTANCE_UPPERBOUND1" />
+                <ScalarProperty Name="WHEELSET_DISTANCE_LOWERBOUND1" ColumnName="WHEELSET_DISTANCE_LOWERBOUND1" />
+                <ScalarProperty Name="WHEELSET_DISTANCE_UPPERBOUND2" ColumnName="WHEELSET_DISTANCE_UPPERBOUND2" />
+                <ScalarProperty Name="WHEELSET_DISTANCE_LOWERBOUND2" ColumnName="WHEELSET_DISTANCE_LOWERBOUND2" />
+                <ScalarProperty Name="BOGIE_DIAM_DIFF_UPPERBOUND1" ColumnName="BOGIE_DIAM_DIFF_UPPERBOUND1" />
+                <ScalarProperty Name="BOGIE_DIAM_DIFF_LOWERBOUND1" ColumnName="BOGIE_DIAM_DIFF_LOWERBOUND1" />
+                <ScalarProperty Name="BOGIE_DIAM_DIFF_UPPERBOUND2" ColumnName="BOGIE_DIAM_DIFF_UPPERBOUND2" />
+                <ScalarProperty Name="BOGIE_DIAM_DIFF_LOWERBOUND2" ColumnName="BOGIE_DIAM_DIFF_LOWERBOUND2" />
+                <ScalarProperty Name="VEHICLE_DIAM_DIFF_UPPERBOUND1" ColumnName="VEHICLE_DIAM_DIFF_UPPERBOUND1" />
+                <ScalarProperty Name="VEHICLE_DIAM_DIFF_LOWERBOUND1" ColumnName="VEHICLE_DIAM_DIFF_LOWERBOUND1" />
+                <ScalarProperty Name="VEHICLE_DIAM_DIFF_UPPERBOUND2" ColumnName="VEHICLE_DIAM_DIFF_UPPERBOUND2" />
+                <ScalarProperty Name="VEHICLE_DIAM_DIFF_LOWERBOUND2" ColumnName="VEHICLE_DIAM_DIFF_LOWERBOUND2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEVICE_STATUS">
+            <EntityTypeMapping TypeName="Model.DEVICE_STATUS">
+              <MappingFragment StoreEntitySet="DEVICE_STATUS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CHECK_TIME" ColumnName="CHECK_TIME" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="LIQUID_LEVEL" ColumnName="LIQUID_LEVEL" />
+                <ScalarProperty Name="WATER_TEMPERATURE" ColumnName="WATER_TEMPERATURE" />
+                <ScalarProperty Name="A_TEMPERATURE" ColumnName="A_TEMPERATURE" />
+                <ScalarProperty Name="B_TEMPERATURE" ColumnName="B_TEMPERATURE" />
+                <ScalarProperty Name="ENVIRONMENT_TEMPERATURE" ColumnName="ENVIRONMENT_TEMPERATURE" />
+                <ScalarProperty Name="DISK_SPACE" ColumnName="DISK_SPACE" />
+                <ScalarProperty Name="NEXT_CHECK_TIME" ColumnName="NEXT_CHECK_TIME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FAULT">
+            <EntityTypeMapping TypeName="Model.FAULT">
+              <MappingFragment StoreEntitySet="FAULT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WHEEL_ID" ColumnName="WHEEL_ID" />
+                <ScalarProperty Name="ITEM" ColumnName="ITEM" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="ISRECHECKED" ColumnName="ISRECHECKED" />
+                <ScalarProperty Name="ALARM_LEVEL" ColumnName="ALARM_LEVEL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECHECKS">
+            <EntityTypeMapping TypeName="Model.RECHECKS">
+              <MappingFragment StoreEntitySet="RECHECKS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FAULT_ID" ColumnName="FAULT_ID" />
+                <ScalarProperty Name="HANDLER" ColumnName="HANDLER" />
+                <ScalarProperty Name="SUGGESTION" ColumnName="SUGGESTION" />
+                <ScalarProperty Name="CONCLUSION" ColumnName="CONCLUSION" />
+                <ScalarProperty Name="TIME" ColumnName="TIME" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="RECHECK_PERSON" ColumnName="RECHECK_PERSON" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SCRAPE_DEVICE_STATUS">
+            <EntityTypeMapping TypeName="Model.SCRAPE_DEVICE_STATUS">
+              <MappingFragment StoreEntitySet="SCRAPE_DEVICE_STATUS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TIME" ColumnName="TIME" />
+                <ScalarProperty Name="PLC" ColumnName="PLC" />
+                <ScalarProperty Name="UPS" ColumnName="UPS" />
+                <ScalarProperty Name="SENSOR1" ColumnName="SENSOR1" />
+                <ScalarProperty Name="SENSOR2" ColumnName="SENSOR2" />
+                <ScalarProperty Name="SENSOR3" ColumnName="SENSOR3" />
+                <ScalarProperty Name="SENSOR4" ColumnName="SENSOR4" />
+                <ScalarProperty Name="SENSOR5" ColumnName="SENSOR5" />
+                <ScalarProperty Name="SENSOR6" ColumnName="SENSOR6" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SITES">
+            <EntityTypeMapping TypeName="Model.SITES">
+              <MappingFragment StoreEntitySet="SITES">
+                <ScalarProperty Name="SITE_ID" ColumnName="SITE_ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="BUREAU_ID" ColumnName="BUREAU_ID" />
+                <ScalarProperty Name="DEPOT_NAME" ColumnName="DEPOT_NAME" />
+                <ScalarProperty Name="CHECK_NAME" ColumnName="CHECK_NAME" />
+                <ScalarProperty Name="PLANT_NAME" ColumnName="PLANT_NAME" />
+                <ScalarProperty Name="DEVICE_ID" ColumnName="DEVICE_ID" />
+                <ScalarProperty Name="FACTORY" ColumnName="FACTORY" />
+                <ScalarProperty Name="DEVICE_NAME" ColumnName="DEVICE_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATISTICS">
+            <EntityTypeMapping TypeName="Model.STATISTICS">
+              <MappingFragment StoreEntitySet="STATISTICS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+                <ScalarProperty Name="SEASON" ColumnName="SEASON" />
+                <ScalarProperty Name="DAY" ColumnName="DAY" />
+                <ScalarProperty Name="TRAIN_COUNT" ColumnName="TRAIN_COUNT" />
+                <ScalarProperty Name="ALARM_COUNT" ColumnName="ALARM_COUNT" />
+                <ScalarProperty Name="DIMENSION_ALARM_COUNT" ColumnName="DIMENSION_ALARM_COUNT" />
+                <ScalarProperty Name="INSPECTION_ALARM_COUNT" ColumnName="INSPECTION_ALARM_COUNT" />
+                <ScalarProperty Name="SCRAPE_ALARM_COUNT" ColumnName="SCRAPE_ALARM_COUNT" />
+                <ScalarProperty Name="ALARM_LEVEL1_COUNT" ColumnName="ALARM_LEVEL1_COUNT" />
+                <ScalarProperty Name="ALARM_LEVEL2_COUNT" ColumnName="ALARM_LEVEL2_COUNT" />
+                <ScalarProperty Name="ALARM_LEVEL3_COUNT" ColumnName="ALARM_LEVEL3_COUNT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRAIN">
+            <EntityTypeMapping TypeName="Model.TRAIN">
+              <MappingFragment StoreEntitySet="TRAIN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="AXLE_COUNT" ColumnName="AXLE_COUNT" />
+                <ScalarProperty Name="DETECTION_TIME" ColumnName="DETECTION_TIME" />
+                <ScalarProperty Name="BUREAUDICT_ID" ColumnName="BUREAUDICT_ID" />
+                <ScalarProperty Name="ALARM_LEVEL" ColumnName="ALARM_LEVEL" />
+                <ScalarProperty Name="INSPECTION_ALARM_LEVEL" ColumnName="INSPECTION_ALARM_LEVEL" />
+                <ScalarProperty Name="SCRAPE_ALARM_LEVEL" ColumnName="SCRAPE_ALARM_LEVEL" />
+                <ScalarProperty Name="DIMENSION_ALARM_LEVEL" ColumnName="DIMENSION_ALARM_LEVEL" />
+                <ScalarProperty Name="DIAMETER_ALARM_LEVEL" ColumnName="DIAMETER_ALARM_LEVEL" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARM_LEVEL" ColumnName="FLANGE_THICKNESS_ALARM_LEVEL" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARM_LEVEL" ColumnName="FLANGE_HEIGHT_ALARM_LEVEL" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARM_LEVEL" ColumnName="RIM_THICKNESS_ALARM_LEVEL" />
+                <ScalarProperty Name="QR_ALARMLEVEL" ColumnName="QR_ALARMLEVEL" />
+                <ScalarProperty Name="UNIT_NUMBER1" ColumnName="UNIT_NUMBER1" />
+                <ScalarProperty Name="UNIT_NUMBER2" ColumnName="UNIT_NUMBER2" />
+                <ScalarProperty Name="END_POSITION" ColumnName="END_POSITION" />
+                <ScalarProperty Name="ARRIVE_SPEED" ColumnName="ARRIVE_SPEED" />
+                <ScalarProperty Name="LEAVE_SPEED" ColumnName="LEAVE_SPEED" />
+                <ScalarProperty Name="SITE_ID" ColumnName="SITE_ID" />
+                <ScalarProperty Name="ALARM1_COUNT" ColumnName="ALARM1_COUNT" />
+                <ScalarProperty Name="ALARM2_COUNT" ColumnName="ALARM2_COUNT" />
+                <ScalarProperty Name="INSPECTION_ALARM1_COUNT" ColumnName="INSPECTION_ALARM1_COUNT" />
+                <ScalarProperty Name="INSPECTION_ALARM2_COUNT" ColumnName="INSPECTION_ALARM2_COUNT" />
+                <ScalarProperty Name="SCRAPE_ALARM1_COUNT" ColumnName="SCRAPE_ALARM1_COUNT" />
+                <ScalarProperty Name="SCRAPE_ALARM2_COUNT" ColumnName="SCRAPE_ALARM2_COUNT" />
+                <ScalarProperty Name="THREADWEAR_ALARMLEVEL" ColumnName="THREADWEAR_ALARMLEVEL" />
+                <ScalarProperty Name="THREADWEAR_ALRAM1_COUNT" ColumnName="THREADWEAR_ALRAM1_COUNT" />
+                <ScalarProperty Name="THREADWEAR_ALRAM2_COUNT" ColumnName="THREADWEAR_ALRAM2_COUNT" />
+                <ScalarProperty Name="DIMENSION_ALARM1_COUNT" ColumnName="DIMENSION_ALARM1_COUNT" />
+                <ScalarProperty Name="DIMENSION_ALARM2_COUNT" ColumnName="DIMENSION_ALARM2_COUNT" />
+                <ScalarProperty Name="DIAMETER_ALARM1_COUNT" ColumnName="DIAMETER_ALARM1_COUNT" />
+                <ScalarProperty Name="DIAMETER_ALARM2_COUNT" ColumnName="DIAMETER_ALARM2_COUNT" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARM1_COUNT" ColumnName="FLANGE_THICKNESS_ALARM1_COUNT" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARM2_COUNT" ColumnName="FLANGE_THICKNESS_ALARM2_COUNT" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARM1_COUNT" ColumnName="FLANGE_HEIGHT_ALARM1_COUNT" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARM2_COUNT" ColumnName="FLANGE_HEIGHT_ALARM2_COUNT" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARM1_COUNT" ColumnName="RIM_THICKNESS_ALARM1_COUNT" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARM2_COUNT" ColumnName="RIM_THICKNESS_ALARM2_COUNT" />
+                <ScalarProperty Name="QR_ALARM1_COUNT" ColumnName="QR_ALARM1_COUNT" />
+                <ScalarProperty Name="QR_ALARM2_COUNT" ColumnName="QR_ALARM2_COUNT" />
+                <ScalarProperty Name="OPERATOR" ColumnName="OPERATOR" />
+                <ScalarProperty Name="LAST_CHECK_ID" ColumnName="LAST_CHECK_ID" />
+                <ScalarProperty Name="CHECKED" ColumnName="CHECKED" />
+                <ScalarProperty Name="MAX_SPEED" ColumnName="MAX_SPEED" />
+                <ScalarProperty Name="MIN_SPEED" ColumnName="MIN_SPEED" />
+                <ScalarProperty Name="TRAIN_TYPE" ColumnName="TRAIN_TYPE" />
+                <ScalarProperty Name="VEHICLE_COUNT" ColumnName="VEHICLE_COUNT" />
+                <ScalarProperty Name="LOCOMOTIVE_COUNT" ColumnName="LOCOMOTIVE_COUNT" />
+                <ScalarProperty Name="TRAIN_NO" ColumnName="TRAIN_NO" />
+                <ScalarProperty Name="ALARM3_COUNT" ColumnName="ALARM3_COUNT" />
+                <ScalarProperty Name="INSPECTION_ALARM3_COUNT" ColumnName="INSPECTION_ALARM3_COUNT" />
+                <ScalarProperty Name="SCRAPE_ALARM3_COUNT" ColumnName="SCRAPE_ALARM3_COUNT" />
+                <ScalarProperty Name="THREADWEAR_ALRAM3_COUNT" ColumnName="THREADWEAR_ALRAM3_COUNT" />
+                <ScalarProperty Name="DIMENSION_ALARM3_COUNT" ColumnName="DIMENSION_ALARM3_COUNT" />
+                <ScalarProperty Name="DIAMETER_ALARM3_COUNT" ColumnName="DIAMETER_ALARM3_COUNT" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARM3_COUNT" ColumnName="FLANGE_THICKNESS_ALARM3_COUNT" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARM3_COUNT" ColumnName="FLANGE_HEIGHT_ALARM3_COUNT" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARM3_COUNT" ColumnName="RIM_THICKNESS_ALARM3_COUNT" />
+                <ScalarProperty Name="QR_ALARM3_COUNT" ColumnName="QR_ALARM3_COUNT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEHICLE">
+            <EntityTypeMapping TypeName="Model.VEHICLE">
+              <MappingFragment StoreEntitySet="VEHICLE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="TRAIN_ID" ColumnName="TRAIN_ID" />
+                <ScalarProperty Name="UNIT_NUMBER" ColumnName="UNIT_NUMBER" />
+                <ScalarProperty Name="COACH_NUMBER" ColumnName="COACH_NUMBER" />
+                <ScalarProperty Name="PASS_ORDER" ColumnName="PASS_ORDER" />
+                <ScalarProperty Name="ALARMLEVEL" ColumnName="ALARMLEVEL" />
+                <ScalarProperty Name="INSPECTION_ALARMLEVEL" ColumnName="INSPECTION_ALARMLEVEL" />
+                <ScalarProperty Name="SCRAPE_ALARMLEVEL" ColumnName="SCRAPE_ALARMLEVEL" />
+                <ScalarProperty Name="DIMENSION_ALARMLEVEL" ColumnName="DIMENSION_ALARMLEVEL" />
+                <ScalarProperty Name="DIAMETER_ALARMLEVEL" ColumnName="DIAMETER_ALARMLEVEL" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARMLEVEL" ColumnName="FLANGE_THICKNESS_ALARMLEVEL" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARMLEVEL" ColumnName="FLANGE_HEIGHT_ALARMLEVEL" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARMLEVEL" ColumnName="RIM_THICKNESS_ALARMLEVEL" />
+                <ScalarProperty Name="QR_ALARMLEVEL" ColumnName="QR_ALARMLEVEL" />
+                <ScalarProperty Name="ALARM1_COUNT" ColumnName="ALARM1_COUNT" />
+                <ScalarProperty Name="ALARM2_COUNT" ColumnName="ALARM2_COUNT" />
+                <ScalarProperty Name="INSPECTION_ALARM1_COUNT" ColumnName="INSPECTION_ALARM1_COUNT" />
+                <ScalarProperty Name="INSPECTION_ALARM2_COUNT" ColumnName="INSPECTION_ALARM2_COUNT" />
+                <ScalarProperty Name="SCRAPE_ALARM1_COUNT" ColumnName="SCRAPE_ALARM1_COUNT" />
+                <ScalarProperty Name="SCRAPE_ALARM2_COUNT" ColumnName="SCRAPE_ALARM2_COUNT" />
+                <ScalarProperty Name="THREADWEAR_ALARMLEVEL" ColumnName="THREADWEAR_ALARMLEVEL" />
+                <ScalarProperty Name="THREADWEAR_ALRAM1_COUNT" ColumnName="THREADWEAR_ALRAM1_COUNT" />
+                <ScalarProperty Name="THREADWEAR_ALRAM2_COUNT" ColumnName="THREADWEAR_ALRAM2_COUNT" />
+                <ScalarProperty Name="DIMENSION_ALARM1_COUNT" ColumnName="DIMENSION_ALARM1_COUNT" />
+                <ScalarProperty Name="DIMENSION_ALARM2_COUNT" ColumnName="DIMENSION_ALARM2_COUNT" />
+                <ScalarProperty Name="DIAMETER_ALARM1_COUNT" ColumnName="DIAMETER_ALARM1_COUNT" />
+                <ScalarProperty Name="DIAMETER_ALARM2_COUNT" ColumnName="DIAMETER_ALARM2_COUNT" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARM1_COUNT" ColumnName="FLANGE_THICKNESS_ALARM1_COUNT" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARM2_COUNT" ColumnName="FLANGE_THICKNESS_ALARM2_COUNT" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARM1_COUNT" ColumnName="FLANGE_HEIGHT_ALARM1_COUNT" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARM2_COUNT" ColumnName="FLANGE_HEIGHT_ALARM2_COUNT" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARM1_COUNT" ColumnName="RIM_THICKNESS_ALARM1_COUNT" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARM2_COUNT" ColumnName="RIM_THICKNESS_ALARM2_COUNT" />
+                <ScalarProperty Name="QR_ALARM1_COUNT" ColumnName="QR_ALARM1_COUNT" />
+                <ScalarProperty Name="QR_ALARM2_COUNT" ColumnName="QR_ALARM2_COUNT" />
+                <ScalarProperty Name="IS_LOCOMOTIVE" ColumnName="IS_LOCOMOTIVE" />
+                <ScalarProperty Name="CAR_TYPE_ID" ColumnName="CAR_TYPE_ID" />
+                <ScalarProperty Name="AEI_END_DIRECTION" ColumnName="AEI_END_DIRECTION" />
+                <ScalarProperty Name="ALARM3_COUNT" ColumnName="ALARM3_COUNT" />
+                <ScalarProperty Name="INSPECTION_ALARM3_COUNT" ColumnName="INSPECTION_ALARM3_COUNT" />
+                <ScalarProperty Name="SCRAPE_ALARM3_COUNT" ColumnName="SCRAPE_ALARM3_COUNT" />
+                <ScalarProperty Name="THREADWEAR_ALRAM3_COUNT" ColumnName="THREADWEAR_ALRAM3_COUNT" />
+                <ScalarProperty Name="DIMENSION_ALARM3_COUNT" ColumnName="DIMENSION_ALARM3_COUNT" />
+                <ScalarProperty Name="DIAMETER_ALARM3_COUNT" ColumnName="DIAMETER_ALARM3_COUNT" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARM3_COUNT" ColumnName="FLANGE_THICKNESS_ALARM3_COUNT" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARM3_COUNT" ColumnName="FLANGE_HEIGHT_ALARM3_COUNT" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARM3_COUNT" ColumnName="RIM_THICKNESS_ALARM3_COUNT" />
+                <ScalarProperty Name="QR_ALARM3_COUNT" ColumnName="QR_ALARM3_COUNT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WHEEL">
+            <EntityTypeMapping TypeName="Model.WHEEL">
+              <MappingFragment StoreEntitySet="WHEEL">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="VEHICLE_ID" ColumnName="VEHICLE_ID" />
+                <ScalarProperty Name="POSITION" ColumnName="POSITION" />
+                <ScalarProperty Name="AXLE_POSITION" ColumnName="AXLE_POSITION" />
+                <ScalarProperty Name="ALARMLEVEL" ColumnName="ALARMLEVEL" />
+                <ScalarProperty Name="INSPECTION_ALARMLEVEL" ColumnName="INSPECTION_ALARMLEVEL" />
+                <ScalarProperty Name="SCRAPE_ALARMLEVEL" ColumnName="SCRAPE_ALARMLEVEL" />
+                <ScalarProperty Name="DIMENSION_ALARMLEVEL" ColumnName="DIMENSION_ALARMLEVEL" />
+                <ScalarProperty Name="DIAMETER_ALARMLEVEL" ColumnName="DIAMETER_ALARMLEVEL" />
+                <ScalarProperty Name="FLANGE_THICKNESS_ALARMLEVEL" ColumnName="FLANGE_THICKNESS_ALARMLEVEL" />
+                <ScalarProperty Name="FLANGE_HEIGHT_ALARMLEVEL" ColumnName="FLANGE_HEIGHT_ALARMLEVEL" />
+                <ScalarProperty Name="RIM_THICKNESS_ALARMLEVEL" ColumnName="RIM_THICKNESS_ALARMLEVEL" />
+                <ScalarProperty Name="QR_ALARMLEVEL" ColumnName="QR_ALARMLEVEL" />
+                <ScalarProperty Name="DIAMETER" ColumnName="DIAMETER" />
+                <ScalarProperty Name="FLANGE_THICKNESS" ColumnName="FLANGE_THICKNESS" />
+                <ScalarProperty Name="FLANGE_HEIGHT" ColumnName="FLANGE_HEIGHT" />
+                <ScalarProperty Name="RIM_THICKNESS" ColumnName="RIM_THICKNESS" />
+                <ScalarProperty Name="QR" ColumnName="QR" />
+                <ScalarProperty Name="COAXIAL_DIAMETER_DIFFERENCE" ColumnName="COAXIAL_DIAMETER_DIFFERENCE" />
+                <ScalarProperty Name="TREAD_WEAR" ColumnName="TREAD_WEAR" />
+                <ScalarProperty Name="WHEELSET_DISTANCE" ColumnName="WHEELSET_DISTANCE" />
+                <ScalarProperty Name="BOGIE_DIAMETER_DIFFERENCE" ColumnName="BOGIE_DIAMETER_DIFFERENCE" />
+                <ScalarProperty Name="VEHICLE_DIAMETER_DIFFERENCE" ColumnName="VEHICLE_DIAMETER_DIFFERENCE" />
+                <ScalarProperty Name="PASS_SPEED" ColumnName="PASS_SPEED" />
+                <ScalarProperty Name="ROUND" ColumnName="ROUND" />
+                <ScalarProperty Name="MAX_BRUISE_LENGTH" ColumnName="MAX_BRUISE_LENGTH" />
+                <ScalarProperty Name="MAX_BRUISE_DEPTH" ColumnName="MAX_BRUISE_DEPTH" />
+                <ScalarProperty Name="MAX_DIAMETER" ColumnName="MAX_DIAMETER" />
+                <ScalarProperty Name="MIN_DIAMETER" ColumnName="MIN_DIAMETER" />
+                <ScalarProperty Name="WHEEL_ORDER" ColumnName="WHEEL_ORDER" />
+                <ScalarProperty Name="ET" ColumnName="ET" />
+                <ScalarProperty Name="OR_VALUE" ColumnName="OR_VALUE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
