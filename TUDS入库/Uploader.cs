@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExceptionHelper;
+using IndexHelper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,7 @@ namespace TUDS入库
     public class Uploader
     {
         public TudsEntities db { get; set; } = new TudsEntities();
-
+        public log4net.ILog log = log4net.LogManager.GetLogger("Uploader");
         private ScrapeInfo scrapeInfo;
         private DimensionInfo dimensionInfo;
         private InspectionInfo inspectionInfo;
@@ -27,224 +29,251 @@ namespace TUDS入库
 
         public void Insert()
         {
-            TRAIN train = InitializeTrain();
-            List<VEHICLE> vehicles = new List<VEHICLE>();
-            List<WHEEL> wheels = new List<WHEEL>();
-            List<FAULT> faults = new List<FAULT>();
-
-            MakeTrain(train);
-            if (dimensionInfo.BaseInfo.IsExceed == "有超标")
+            try
             {
-                train.ALARM2_COUNT++;
-                train.DIMENSION_ALARM2_COUNT++;
-                train.DIMENSION_ALARM_LEVEL = 2;
-            }
-            int wheelOrder = 0;
-            for (int i = 0; i < train.VEHICLE_COUNT; i++)
-            {
-                bool isLocomotive = dimensionInfo.Orders[i].VehicleType == "JC";
-                VEHICLE vehicle = new VEHICLE
+                TRAIN train = InitializeTrain();
+                List<VEHICLE> vehicles = new List<VEHICLE>();
+                List<WHEEL> wheels = new List<WHEEL>();
+                List<FAULT> faults = new List<FAULT>();
+
+                MakeTrain(train);
+                if (dimensionInfo.BaseInfo.IsExceed == "有超标")
                 {
-                    ID = Guid.NewGuid().ToString(),
-                    TRAIN_ID = train.ID,
-                    IS_LOCOMOTIVE = isLocomotive?(short)0:(short)1,
-                    PASS_ORDER = (byte)aei.Vehicles[i].Order,
-
-                    ALARMLEVEL = 0,
-                    ALARM1_COUNT = 0,
-                    ALARM2_COUNT = 0,
-
-                    SCRAPE_ALARMLEVEL = 0,
-                    SCRAPE_ALARM1_COUNT = 0,
-                    SCRAPE_ALARM2_COUNT = 0,
-
-                    DIMENSION_ALARMLEVEL = 0,
-                    DIMENSION_ALARM1_COUNT = 0,
-                    DIMENSION_ALARM2_COUNT = 0,
-
-                    DIAMETER_ALARMLEVEL = 0,
-                    DIAMETER_ALARM1_COUNT = 0,
-                    DIAMETER_ALARM2_COUNT = 0,
-
-                    FLANGE_HEIGHT_ALARMLEVEL = 0,
-                    FLANGE_HEIGHT_ALARM1_COUNT = 0,
-                    FLANGE_HEIGHT_ALARM2_COUNT = 0,
-
-                    FLANGE_THICKNESS_ALARMLEVEL = 0,
-                    FLANGE_THICKNESS_ALARM1_COUNT = 0,
-                    FLANGE_THICKNESS_ALARM2_COUNT = 0,
-
-                    INSPECTION_ALARMLEVEL = 0,
-                    INSPECTION_ALARM1_COUNT = 0,
-                    INSPECTION_ALARM2_COUNT = 0,
-
-                    QR_ALARMLEVEL = 0,
-                    QR_ALARM1_COUNT = 0,
-                    QR_ALARM2_COUNT = 0,
-
-                    RIM_THICKNESS_ALARMLEVEL = 0,
-                    RIM_THICKNESS_ALARM1_COUNT = 0,
-                    RIM_THICKNESS_ALARM2_COUNT = 0,
-
-                    THREADWEAR_ALARMLEVEL = 0,
-                    THREADWEAR_ALRAM1_COUNT = 0,
-                    THREADWEAR_ALRAM2_COUNT = 0,
-
-                };
-
-                if (isLocomotive)
+                    train.ALARM2_COUNT++;
+                    train.DIMENSION_ALARM2_COUNT++;
+                    train.DIMENSION_ALARM_LEVEL = 2;
+                }
+                int wheelOrder = 0;
+                for (int i = 0; i < train.VEHICLE_COUNT; i++)
                 {
-                    int index = dimensionInfo.Orders[i].Index;
-                    var locomotive = dimensionInfo.Locomotives[index];
-                    vehicle.NAME = locomotive.VehicleNumber;
-                    vehicle.AEI_END_DIRECTION = locomotive.AeiEndPosition;
-                    vehicle.COACH_NUMBER = locomotive.VehicleNumber;
-                    vehicle.CAR_TYPE_ID =
-                    vehicle.UNIT_NUMBER = locomotive.TrainTimes;
-                    for (int j = 0; j < locomotive.AxleCount * 2; j++)
+                    bool isLocomotive = dimensionInfo.Orders.Index(i).VehicleType == "JC";
+                    VEHICLE vehicle = new VEHICLE
                     {
-                        string scrapeStatus = scrapeInfo.Wheels[i * 8 + j].Status.ToString();
-                        WHEEL wheel = new WHEEL
-                        {
-                            ID = Guid.NewGuid().ToString(),
-                            WHEEL_ORDER = (byte)(j + 1),
-                            VEHICLE = vehicle,
-                            VEHICLE_ID = vehicle.ID,
-                            SCRAPE_ALARMLEVEL = (byte)(scrapeStatus == "T" ? 0 : 2),
-                            PASS_SPEED = scrapeInfo.Wheels[wheelOrder].Speed.Round(),
-                            ROUND = scrapeInfo.Wheels[wheelOrder].Round.Round(),
-                            MAX_BRUISE_DEPTH = scrapeInfo.Wheels[wheelOrder].MaxBruiseDeep.Round(),
-                            MAX_BRUISE_LENGTH = scrapeInfo.Wheels[wheelOrder].MaxBruiseLen.Round(),
-                            MAX_DIAMETER = scrapeInfo.Wheels[wheelOrder].MaxDia.Round(),
-                            MIN_DIAMETER = scrapeInfo.Wheels[wheelOrder].MinDia.Round(),
-                            AXLE_POSITION = (byte)(j / 2 + 1),
-                            ALARMLEVEL = 0,
-                            //同轴轮径差 
-                            COAXIAL_DIAMETER_DIFFERENCE = Math.Abs(locomotive.Wheels[j / 2 * 2].Diameter - locomotive.Wheels[j / 2 * 2 + 1].Diameter).Round(),
-                            BOGIE_DIAMETER_DIFFERENCE = (locomotive.TZXCs[j / 4].TongZhuanXiangLunJingMax - locomotive.TZXCs[j / 4].TongZhuanXiangLunJingMax).Round(),
-                            VEHICLE_DIAMETER_DIFFERENCE = (locomotive.TongCheLunJingMax - locomotive.TongCheLunJingMin).Round(),
-                            DIAMETER_ALARMLEVEL = 0,
-                            DIAMETER = locomotive.Wheels[j].Diameter.Round(),
-                            DIMENSION_ALARMLEVEL = 0,
-                            FLANGE_THICKNESS = locomotive.Wheels[j].FlangeThickness.Round(),
-                            FLANGE_HEIGHT = locomotive.Wheels[j].FlangeHeight.Round(),
-                            FLANGE_HEIGHT_ALARMLEVEL = 0,
-                            FLANGE_THICKNESS_ALARMLEVEL = 0,
-                            INSPECTION_ALARMLEVEL = 0,
-                            POSITION = GetWheelPositionByIndex(j),
-                            NAME = locomotive.Wheels[j].Name,
-                            QR_ALARMLEVEL = 0,
-                            QR = locomotive.Wheels[j].QR.Round(),
-                            RIM_THICKNESS_ALARMLEVEL = 0,
-                            RIM_THICKNESS = locomotive.Wheels[j].RimThickness.Round(),
-                            TREAD_WEAR = locomotive.Wheels[j].RimThickness.Round(),
-                            WHEELSET_DISTANCE = locomotive.Wheels[j].WheelsetDistance.Round()
-                        };
-                        if (scrapeStatus == "F")
-                        {
-                            vehicle.ALARM2_COUNT++;
-                            vehicle.SCRAPE_ALARM2_COUNT++;
-                            train.ALARM2_COUNT++;
-                            train.SCRAPE_ALARM_LEVEL++;
+                        ID = Guid.NewGuid().ToString(),
+                        TRAIN_ID = train.ID,
+                        IS_LOCOMOTIVE = isLocomotive ? (short)0 : (short)1,
+                        PASS_ORDER = (byte)aei.Vehicles.Index(i).Order,
 
-                            vehicle.SCRAPE_ALARMLEVEL = 2;
-                            train.SCRAPE_ALARM_LEVEL = 2;
-                            FAULT fault = new FAULT()
+                        ALARMLEVEL = 0,
+                        ALARM1_COUNT = 0,
+                        ALARM2_COUNT = 0,
+
+                        SCRAPE_ALARMLEVEL = 0,
+                        SCRAPE_ALARM1_COUNT = 0,
+                        SCRAPE_ALARM2_COUNT = 0,
+
+                        DIMENSION_ALARMLEVEL = 0,
+                        DIMENSION_ALARM1_COUNT = 0,
+                        DIMENSION_ALARM2_COUNT = 0,
+
+                        DIAMETER_ALARMLEVEL = 0,
+                        DIAMETER_ALARM1_COUNT = 0,
+                        DIAMETER_ALARM2_COUNT = 0,
+
+                        FLANGE_HEIGHT_ALARMLEVEL = 0,
+                        FLANGE_HEIGHT_ALARM1_COUNT = 0,
+                        FLANGE_HEIGHT_ALARM2_COUNT = 0,
+
+                        FLANGE_THICKNESS_ALARMLEVEL = 0,
+                        FLANGE_THICKNESS_ALARM1_COUNT = 0,
+                        FLANGE_THICKNESS_ALARM2_COUNT = 0,
+
+                        INSPECTION_ALARMLEVEL = 0,
+                        INSPECTION_ALARM1_COUNT = 0,
+                        INSPECTION_ALARM2_COUNT = 0,
+
+                        QR_ALARMLEVEL = 0,
+                        QR_ALARM1_COUNT = 0,
+                        QR_ALARM2_COUNT = 0,
+
+                        RIM_THICKNESS_ALARMLEVEL = 0,
+                        RIM_THICKNESS_ALARM1_COUNT = 0,
+                        RIM_THICKNESS_ALARM2_COUNT = 0,
+
+                        THREADWEAR_ALARMLEVEL = 0,
+                        THREADWEAR_ALRAM1_COUNT = 0,
+                        THREADWEAR_ALRAM2_COUNT = 0,
+
+                    };
+
+                    if (isLocomotive)
+                    {
+                        int index = dimensionInfo.Orders.Index(i).Index;
+                        var locomotive = dimensionInfo.Locomotives.Index(index);
+                        vehicle.NAME = locomotive.VehicleNumber;
+                        vehicle.AEI_END_DIRECTION = locomotive.AeiEndPosition;
+                        vehicle.COACH_NUMBER = locomotive.VehicleNumber;
+                        string carType = aei.Vehicles.Index(i).Model;
+                        CAR_TYPE type = db.CAR_TYPE.Where(c => c.TYPE == carType).FirstOrDefault();
+                        if (type == null)
+                        {
+                            //数据库中不存在的车型
+                            CAR_TYPE newType = new CAR_TYPE()
                             {
                                 ID = Guid.NewGuid().ToString(),
-                                WHEEL_ID = wheel.ID,
-                                ITEM = "擦伤",
-                                VALUE = 2,
-                                ISRECHECKED = 0
+                                TYPE = aei.Vehicles.Index(i).Model
                             };
+                            db.CAR_TYPE.Add(newType);
+                            db.SaveChanges();
+                            vehicle.CAR_TYPE_ID = newType.ID;
                         }
-
-                        wheelOrder++;
-                    }
-                }
-                else
-                {
-                    int index = dimensionInfo.Orders[i].Index;
-                    var coach = dimensionInfo.Coaches[index];
-                    vehicle.NAME = coach.Name;
-                    vehicle.AEI_END_DIRECTION = coach.AeiEndPosition;
-                    //
-                    string carType = aei.Vehicles[i].Model;
-                    CAR_TYPE type = db.CAR_TYPE.Where(c => c.TYPE == carType).FirstOrDefault();
-                    if (type == null)
-                    {
-                        //数据库中不存在的车型
-                        CAR_TYPE newType = new CAR_TYPE()
+                        else
                         {
-                            ID = Guid.NewGuid().ToString(),
-                            TYPE = aei.Vehicles[i].Model
-                        };
-                        db.CAR_TYPE.Add(newType);
-                        db.SaveChanges();
-                        vehicle.CAR_TYPE_ID = newType.ID;
+                            vehicle.CAR_TYPE_ID = type.ID;
+                        }
+                        vehicle.UNIT_NUMBER = locomotive.TrainTimes;
+                        for (int j = 0; j < locomotive.AxleCount * 2; j++)
+                        {
+                            string scrapeStatus = scrapeInfo.Wheels.Index(i * 8 + j).Status?.ToString();
+                            WHEEL wheel = new WHEEL
+                            {
+                                ID = Guid.NewGuid().ToString(),
+                                WHEEL_ORDER = (byte)(j + 1),
+                                VEHICLE = vehicle,
+                                VEHICLE_ID = vehicle.ID,
+                                SCRAPE_ALARMLEVEL = (byte)(scrapeStatus == "T" ? 0 : 2),
+                                PASS_SPEED = scrapeInfo.Wheels.Index(wheelOrder).Speed.Round(),
+                                ROUND = scrapeInfo.Wheels.Index(wheelOrder).Round.Round(),
+                                MAX_BRUISE_DEPTH = scrapeInfo.Wheels.Index(wheelOrder).MaxBruiseDeep.Round(),
+                                MAX_BRUISE_LENGTH = scrapeInfo.Wheels.Index(wheelOrder).MaxBruiseLen.Round(),
+                                MAX_DIAMETER = scrapeInfo.Wheels.Index(wheelOrder).MaxDia.Round(),
+                                MIN_DIAMETER = scrapeInfo.Wheels.Index(wheelOrder).MinDia.Round(),
+                                AXLE_POSITION = (byte)(j / 2 + 1),
+                                ALARMLEVEL = 0,
+                                //同轴轮径差 
+                                COAXIAL_DIAMETER_DIFFERENCE = Math.Abs(locomotive.Wheels[j / 2 * 2].Diameter - locomotive.Wheels.Index(j / 2 * 2 + 1).Diameter).Round(),
+                                //BOGIE_DIAMETER_DIFFERENCE = (locomotive.TZXCs[j / 4].TongZhuanXiangLunJingMax - locomotive.TZXCs[j / 4].TongZhuanXiangLunJingMax).Round(),
+                                VEHICLE_DIAMETER_DIFFERENCE = (locomotive.TongCheLunJingMax - locomotive.TongCheLunJingMin).Round(),
+                                DIAMETER_ALARMLEVEL = 0,
+                                DIAMETER = locomotive.Wheels.Index(j).Diameter.Round(),
+                                DIMENSION_ALARMLEVEL = 0,
+                                FLANGE_THICKNESS = locomotive.Wheels.Index(j).FlangeThickness.Round(),
+                                FLANGE_HEIGHT = locomotive.Wheels.Index(j).FlangeHeight.Round(),
+                                FLANGE_HEIGHT_ALARMLEVEL = 0,
+                                FLANGE_THICKNESS_ALARMLEVEL = 0,
+                                INSPECTION_ALARMLEVEL = 0,
+                                POSITION = GetWheelPositionByIndex(j),
+                                QR_ALARMLEVEL = 0,
+                                QR = locomotive.Wheels.Index(j).QR.Round(),
+                                RIM_THICKNESS_ALARMLEVEL = 0,
+                                RIM_THICKNESS = locomotive.Wheels.Index(j).RimThickness.Round(),
+                                TREAD_WEAR = locomotive.Wheels.Index(j).RimThickness.Round(),
+                                WHEELSET_DISTANCE = locomotive.Wheels.Index(j).WheelsetDistance.Round()
+                            };
+                            wheel.NAME = vehicle.NAME + " " + wheel.POSITION;
+                            if (scrapeStatus == "F")
+                            {
+                                vehicle.ALARM2_COUNT++;
+                                vehicle.SCRAPE_ALARM2_COUNT++;
+                                train.ALARM2_COUNT++;
+                                train.SCRAPE_ALARM_LEVEL++;
+
+                                vehicle.SCRAPE_ALARMLEVEL = 2;
+                                train.SCRAPE_ALARM_LEVEL = 2;
+                                FAULT fault = new FAULT()
+                                {
+                                    ID = Guid.NewGuid().ToString(),
+                                    WHEEL_ID = wheel.ID,
+                                    ITEM = "擦伤",
+                                    VALUE = 2,
+                                    ISRECHECKED = 0
+                                };
+                                faults.Add(fault);
+                            }
+                            wheels.Add(wheel);
+                            wheelOrder++;
+                        }
                     }
                     else
                     {
-                        vehicle.CAR_TYPE_ID = type.ID;
-                    }
-                    vehicle.COACH_NUMBER = coach.Name;
-                    vehicle.UNIT_NUMBER = coach.Name;
+                        int index = dimensionInfo.Orders.Index(i).Index;
+                        var coach = dimensionInfo.Coaches.Index(index);
+                        vehicle.NAME = aei.Vehicles.Index(i)?.Model + "-" + aei.Vehicles.Index(i)?.CarNumber;
+                        vehicle.AEI_END_DIRECTION = aei.Vehicles.Index(i)?.EndPosition;
 
-                    for (int j = 0; j < coach.AxleCount * 2; j++)
-                    {
-                        string scrapeStatus = scrapeInfo.Wheels[i * 8 + j].Status.ToString();
-                        WHEEL wheel = new WHEEL
+                        string carType = aei.Vehicles.Index(i)?.Model;
+                        CAR_TYPE type = db.CAR_TYPE.Where(c => c.TYPE == carType).FirstOrDefault();
+                        if (type == null)
                         {
-                            ID = Guid.NewGuid().ToString(),
-                            WHEEL_ORDER = (byte)(j + 1),
-                            VEHICLE = vehicle,
-                            VEHICLE_ID = vehicle.ID,
-                            SCRAPE_ALARMLEVEL = (byte)(scrapeStatus == "T" ? 0 : 2),
-                            PASS_SPEED = scrapeInfo.Wheels[wheelOrder].Speed.Round(),
-                            ROUND = scrapeInfo.Wheels[wheelOrder].Round.Round(),
-                            MAX_BRUISE_DEPTH = scrapeInfo.Wheels[wheelOrder].MaxBruiseDeep.Round(),
-                            MAX_BRUISE_LENGTH = scrapeInfo.Wheels[wheelOrder].MaxBruiseLen.Round(),
-                            MAX_DIAMETER = scrapeInfo.Wheels[wheelOrder].MaxDia.Round(),
-                            MIN_DIAMETER = scrapeInfo.Wheels[wheelOrder].MinDia.Round(),
-                            AXLE_POSITION = (byte)(j / 2 + 1),
-                            ALARMLEVEL = 0,
-                            //同轴轮径差 
-                            COAXIAL_DIAMETER_DIFFERENCE = Math.Abs(coach.Wheels[j / 2 * 2].Diameter - dimensionInfo.Locomotives[index].Wheels[j / 2 * 2 + 1].Diameter).Round(),
-                            BOGIE_DIAMETER_DIFFERENCE = (coach.TZXCs[j / 4].TongZhuanXiangLunJingMax - coach.TZXCs[j / 4].TongZhuanXiangLunJingMax).Round(),
-                            VEHICLE_DIAMETER_DIFFERENCE = (coach.TongCheLunJingMax - coach.TongCheLunJingMin).Round(),
-                            DIAMETER_ALARMLEVEL = 0,
-                            DIAMETER = coach.Wheels[j].Diameter.Round(),
-                            DIMENSION_ALARMLEVEL = 0,
-                            FLANGE_THICKNESS = coach.Wheels[j].FlangeThickness.Round(),
-                            FLANGE_HEIGHT = coach.Wheels[j].FlangeHeight.Round(),
-                            FLANGE_HEIGHT_ALARMLEVEL = 0,
-                            FLANGE_THICKNESS_ALARMLEVEL = 0,
-                            INSPECTION_ALARMLEVEL = 0,
-                            POSITION = GetWheelPositionByIndex(j),
-                            NAME = coach.Wheels[j].Name,
-                            QR_ALARMLEVEL = 0,
-                            QR = coach.Wheels[j].QR.Round(),
-                            RIM_THICKNESS_ALARMLEVEL = 0,
-                            RIM_THICKNESS = coach.Wheels[j].RimThickness.Round(),
-                            TREAD_WEAR = coach.Wheels[j].RimThickness.Round(),
-                            WHEELSET_DISTANCE = coach.Wheels[j].WheelsetDistance.Round()
-                        };
+                            //数据库中不存在的车型
+                            CAR_TYPE newType = new CAR_TYPE()
+                            {
+                                ID = Guid.NewGuid().ToString(),
+                                TYPE = aei.Vehicles.Index(i)?.Model
+                            };
+                            db.CAR_TYPE.Add(newType);
+                            db.SaveChanges();
+                            vehicle.CAR_TYPE_ID = newType.ID;
+                        }
+                        else
+                        {
+                            vehicle.CAR_TYPE_ID = type.ID;
+                        }
+                        vehicle.COACH_NUMBER = aei.Vehicles.Index(i)?.Model + "-" + aei.Vehicles.Index(i)?.CarNumber;
+                        vehicle.UNIT_NUMBER = aei.Vehicles.Index(i)?.Model + "-" + aei.Vehicles.Index(i).CarNumber.Substring(0, aei.Vehicles.Index(i).CarNumber.Length - 2);
 
+                        for (int j = 0; j < aei.Vehicles.Index(i)?.AxleCount * 2; j++)
+                        {
+                            string scrapeStatus = scrapeInfo.Wheels.Index(i * 8 + j).Status?.ToString();
+                            WHEEL wheel = new WHEEL
+                            {
+                                ID = Guid.NewGuid().ToString(),
+                                WHEEL_ORDER = (byte)(j + 1),
+                                VEHICLE = vehicle,
+                                VEHICLE_ID = vehicle.ID,
+                                SCRAPE_ALARMLEVEL = (byte)(scrapeStatus == "T" ? 0 : 2),
+                                PASS_SPEED = scrapeInfo.Wheels.Index(wheelOrder).Speed.Round(),
+                                ROUND = scrapeInfo.Wheels.Index(wheelOrder).Round.Round(),
+                                MAX_BRUISE_DEPTH = scrapeInfo.Wheels.Index(wheelOrder).MaxBruiseDeep.Round(),
+                                MAX_BRUISE_LENGTH = scrapeInfo.Wheels.Index(wheelOrder).MaxBruiseLen.Round(),
+                                MAX_DIAMETER = scrapeInfo.Wheels.Index(wheelOrder).MaxDia.Round(),
+                                MIN_DIAMETER = scrapeInfo.Wheels.Index(wheelOrder).MinDia.Round(),
+                                AXLE_POSITION = (byte)(j / 2 + 1),
+                                ALARMLEVEL = 0,
+                                //同轴轮径差 
+                                COAXIAL_DIAMETER_DIFFERENCE = Math.Abs(coach.Wheels.Index(j / 2 * 2).Diameter - coach.Wheels.Index(j / 2 * 2 + 1).Diameter).Round(),
+                                BOGIE_DIAMETER_DIFFERENCE = (coach.TZXCs.Index(j / 4).TongZhuanXiangLunJingMax - coach.TZXCs.Index(j / 4).TongZhuanXiangLunJingMax).Round(),
+                                VEHICLE_DIAMETER_DIFFERENCE = (coach.TongCheLunJingMax - coach.TongCheLunJingMin).Round(),
+                                DIAMETER_ALARMLEVEL = 0,
+                                DIAMETER = coach.Wheels.Index(j).Diameter.Round(),
+                                DIMENSION_ALARMLEVEL = 0,
+                                FLANGE_THICKNESS = coach.Wheels.Index(j).FlangeThickness.Round(),
+                                FLANGE_HEIGHT = coach.Wheels.Index(j).FlangeHeight.Round(),
+                                FLANGE_HEIGHT_ALARMLEVEL = 0,
+                                FLANGE_THICKNESS_ALARMLEVEL = 0,
+                                INSPECTION_ALARMLEVEL = 0,
+                                POSITION = GetWheelPositionByIndex(j),
+                                NAME = coach.Wheels.Index(j).Name,
+                                QR_ALARMLEVEL = 0,
+                                QR = coach.Wheels.Index(j).QR.Round(),
+                                RIM_THICKNESS_ALARMLEVEL = 0,
+                                RIM_THICKNESS = coach.Wheels.Index(j).RimThickness.Round(),
+                                TREAD_WEAR = coach.Wheels.Index(j).RimThickness.Round(),
+                                WHEELSET_DISTANCE = coach.Wheels.Index(j).WheelsetDistance.Round()
+                            };
+                            wheels.Add(wheel);
+                        }
                     }
+                    vehicles.Add(vehicle);
                 }
+                db.TRAIN.Add(train);
+                foreach (var item in vehicles)
+                {
+                    db.VEHICLE.Add(item);
+                }
+                foreach (var item in wheels)
+                {
+                    db.WHEEL.Add(item);
+                }
+                foreach (var item in faults)
+                {
+                    db.FAULT.Add(item);
+                }
+                db.SaveChanges();
             }
-            db.TRAIN.Add(train);
-            foreach (var item in vehicles)
+            catch (Exception e)
             {
-                db.VEHICLE.Add(item);
-            }
-            foreach (var item in wheels)
-            {
-                db.WHEEL.Add(item);
-            }
-            foreach (var item in faults)
-            {
-                db.FAULT.Add(item);
+                log.Error(e.ToRecord());
             }
         }
         private void MakeTrain(TRAIN train)
@@ -253,14 +282,32 @@ namespace TUDS入库
             train.MAX_SPEED = (decimal)scrapeInfo.MaxSpeed;
             train.MIN_SPEED = (decimal)scrapeInfo.MinSpeed;
             train.LOCOMOTIVE_COUNT = (byte)dimensionInfo.Locomotives.Count();
-            train.TRAIN_TYPE = dimensionInfo.BaseInfo.Type;
+            train.TRAIN_TYPE = "D";
             train.END_POSITION = dimensionInfo.BaseInfo.Direction.ToString();
             train.DETECTION_TIME = aei.Time;
-            train.SITE_ID = dimensionInfo.BaseInfo.StationCode.ToString();
-            train.NAME = dimensionInfo.BaseInfo.TrainTimes;
-            train.UNIT_NUMBER1 = dimensionInfo.BaseInfo.TrainTimes;
+            string stationCode = dimensionInfo.BaseInfo.StationCode.ToString();
+            SITES site = db.SITES.Where(s => s.CODE == stationCode).FirstOrDefault();
+            if (site is null)
+            {
+                SITES newSite = new SITES()
+                {
+                    SITE_ID = Guid.NewGuid().ToString(),
+                    CODE = stationCode
+                };
+                db.SITES.Add(newSite);
+                db.SaveChanges();
+                train.SITE_ID = newSite.SITE_ID;
+            }
+            else
+            {
+                train.SITE_ID = site.SITE_ID;
+            }
+
+            train.NAME = aei.Vehicles[0].Model + aei.Vehicles[0].CarNumber.Substring(0, aei.Vehicles[0].CarNumber.Length - 2);
+            train.UNIT_NUMBER1 = aei.Vehicles[0].Model + aei.Vehicles[0].CarNumber.Substring(0, aei.Vehicles[0].CarNumber.Length - 2);
             train.VEHICLE_COUNT = (byte)(aei.VehicleCount);
-            if(inspectionInfo.Defects.Count > 0)
+            train.BUREAUDICT_ID = "B";
+            if (inspectionInfo.Defects.Count > 0)
             {
                 train.INSPECTION_ALARM_LEVEL = (byte)inspectionInfo.Defects.Max(d => d.AlarmLevel);
                 train.INSPECTION_ALARM1_COUNT = (byte)inspectionInfo.Defects.Where(d => d.AlarmLevel == 1).Count();
@@ -308,6 +355,7 @@ namespace TUDS入库
                 QR_ALARM2_COUNT = 0,
 
                 CHECKED = 0,
+                VEHICLE_COUNT = (byte)Math.Ceiling(aei.AxleCount / 4.0)
             };
             return train;
         }

@@ -378,8 +378,10 @@ namespace TUDS报文模型
             for(int i = 0; i < count; i++)
             {
                 Wheels.Add(new WheelInfo());
-                TZXCs.Add(new TongZhuanXiangLunJingCha());
+                Wheels.Add(new WheelInfo());
             }
+            TZXCs.Add(new TongZhuanXiangLunJingCha());
+            TZXCs.Add(new TongZhuanXiangLunJingCha());
         }
     }
 

@@ -15,7 +15,7 @@ namespace TUDS匹配策略
 {
     public static class Strategy
     {
-        public static log4net.ILog log = log4net.LogManager.GetLogger("Main");
+        public static log4net.ILog log = log4net.LogManager.GetLogger("Strategy");
         public static string DirectoryPath { get; }
         public static string BackUpPath { get; }
         public static int MaxCheckTime { get; }
@@ -47,7 +47,7 @@ namespace TUDS匹配策略
             DimensionFile = GetLatestFile("*Dimension.txt");
             InspectionFile = GetLatestFile("*Inspection.txt");
             int count = 0;
-            if(ScrapeFile != null)
+            if (ScrapeFile != null)
             {
                 count++;
             }
@@ -93,32 +93,45 @@ namespace TUDS匹配策略
 
         public static void Run()
         {
-            while(true)
+            while (true)
             {
-                int fileNumber = UpdateFile();
-                if(fileNumber == 0)
+                try
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(10));
-                    continue;
-                }
-                if(fileNumber == 4)
-                {
-                    Load();
-                }
-                else
-                {
-                    for (int i = 0; i < MaxCheckTime; i++)
+
+                    int fileNumber = UpdateFile();
+                    if (fileNumber == 0)
                     {
-                        int counter = UpdateFile();
-                        if(counter == 4)
-                        {//正常入库
+                        Thread.Sleep(TimeSpan.FromSeconds(10));
+                        continue;
+                    }
+                    if (fileNumber == 4)
+                    {
+                        Load();
+                    }
+                    else
+                    {
+                        for (int i = 0; i < MaxCheckTime; i++)
+                        {
+                            Thread.Sleep(TimeSpan.FromSeconds(10));
+                            int counter = UpdateFile();
+                            if (counter == 4)
+                            {//正常入库
+                                Load();
+                                break;
+                            }
+                        }
+                        if (UpdateFile() != 0)
+                        {
+                            //数据没到齐
+                            log.Warn("缺少报文,执行入库");
                             Load();
                         }
-                        Thread.Sleep(TimeSpan.FromSeconds(10));
+
                     }
-                    //数据没到齐
-                    log.Warn("缺少报文,执行入库");
-                    Load();
+                }
+                catch (Exception e)
+                {
+                    log.Error(e.ToRecord());
                 }
             }
         }
@@ -126,25 +139,27 @@ namespace TUDS匹配策略
         {
             int axleCount;
             DateTime time;
-            if(AeiFile != null)
+            //找出该列车的探测时间和轴数
+            //采用数据的优先级为 AEI -> 探伤 -> 几何尺寸 -> 擦伤
+            if (AeiFile != null)
             {
                 var a = AeiInfo.Create(AeiFile);
                 axleCount = a.AxleCount;
                 time = a.Time;
             }
-            else if(InspectionFile != null)
+            else if (InspectionFile != null)
             {
                 var ins = InspectionInfo.Create(InspectionFile);
                 axleCount = ins.Formations.Count * 32;
                 time = DateTime.ParseExact(ins.Time, "yyyyMMddHHmmss", null);
             }
-            else if(DimensionFile != null)
+            else if (DimensionFile != null)
             {
                 var dim = DimensionInfo.Create(DimensionFile);
                 axleCount = dim.BaseInfo.AxleCount;
-                time = DateTime.ParseExact(dim.BaseInfo.DetectionTime, "yyyyMMddHHmmss", null); 
+                time = DateTime.ParseExact(dim.BaseInfo.DetectionTime, "yyyyMMddHHmmss", null);
             }
-            else if(ScrapeFile != null)
+            else if (ScrapeFile != null)
             {
                 var scr = ScrapeInfo.Create(ScrapeFile);
                 axleCount = scr.AxleCnt;
@@ -154,11 +169,19 @@ namespace TUDS匹配策略
             {
                 throw new Exception("AEI,探伤，几何尺寸，擦伤报文均不存在，无法入库");
             }
+            if(axleCount >= 22 && axleCount <= 42)
+            {
+                axleCount = 32;
+            }
+            else if(axleCount > 42 && axleCount <= 74)
+            {
+                axleCount = 64;
+            }
             ScrapeInfo scrape;
             DimensionInfo dimension;
             AeiInfo aei;
             InspectionInfo inspection;
-            if(ScrapeFile is null)
+            if (ScrapeFile is null)
             {
                 scrape = ScrapeInfo.CreateDefault(axleCount, time);
             }
@@ -191,18 +214,33 @@ namespace TUDS匹配策略
                 inspection = InspectionInfo.Create(InspectionFile);
             }
             var loader = new Uploader(scrape, dimension, inspection, aei);
-            loader.Insert();
+                loader.Insert();
+
+
             Clear();
         }
         /// <summary>
         /// 清理工作
         /// </summary>
         private static void Clear()
-        {//
-            File.Move(ScrapeFile.FullName, Path.Combine(BackUpPath, ScrapeFile.Name));
-            File.Move(DimensionFile.FullName, Path.Combine(BackUpPath, DimensionFile.Name));
-            File.Move(AeiFile.FullName, Path.Combine(BackUpPath, AeiFile.Name));
-            File.Move(InspectionFile.FullName, Path.Combine(BackUpPath, InspectionFile.Name));
+        {
+            if (ScrapeFile != null)
+            {
+                File.Move(ScrapeFile.FullName, Path.Combine(BackUpPath, ScrapeFile.Name));
+            }
+            if (DimensionFile != null)
+            {
+                File.Move(DimensionFile.FullName, Path.Combine(BackUpPath, DimensionFile.Name));
+            }
+            if (AeiFile != null)
+            {
+                File.Move(AeiFile.FullName, Path.Combine(BackUpPath, AeiFile.Name));
+            }
+            if (InspectionFile != null)
+            {
+                File.Move(InspectionFile.FullName, Path.Combine(BackUpPath, InspectionFile.Name));
+            }
+
             ScrapeFile = null;
             DimensionFile = null;
             AeiFile = null;

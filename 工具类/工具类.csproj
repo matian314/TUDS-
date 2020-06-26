@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="FileExtensions.cs" />
     <Compile Include="ExceptionExtensions.cs" />
+    <Compile Include="IndexExtensions.cs" />
     <Compile Include="MathExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

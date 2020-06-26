@@ -77,7 +77,7 @@ namespace TUDS报文模型
             public string Model { get; set; }
             public string EndPosition { get; set; }
 
-            private int AxleCount;
+            public int AxleCount;
         }
     }
 }

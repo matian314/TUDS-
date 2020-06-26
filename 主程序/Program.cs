@@ -10,6 +10,7 @@ using TUDS报文模型;
 using TUDS入库;
 using TUDS匹配策略;
 using ExceptionHelper;
+using System.Diagnostics;
 
 namespace 主程序
 {
@@ -19,25 +20,25 @@ namespace 主程序
         static void Main(string[] args)
         {
             log4net.Config.XmlConfigurator.Configure();
-            while (true)
             {
-                try
+                while (true)
                 {
-                    Action act = () =>
+                    try
                     {
-                        Strategy.Run();
-                    };
-                    Task.Run(act);
-                    new MessageReceiver().Run();
-                    while (true) { }
-                }
-                catch (Exception e)
-                {
-                    log.Error(e.ToRecord());
+                        Action act = () =>
+                        {
+                            Strategy.Run();
+                        };
+                        Task.Run(act);
+                        new MessageReceiver().Run();
+                        while (true) { }
+                    }
+                    catch (Exception e)
+                    {
+                        log.Error(e.ToRecord());
+                    }
                 }
             }
-
-            
         }
         public static void ReceiveAeiMessage(string message)
         {

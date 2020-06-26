@@ -35,24 +35,37 @@ namespace TUDS报文接收
             }
         }
 
-        public byte[] TcpReceiveBytes()
-        //public byte[] TcpReceiveBytes(string Ip, int port)
+        public byte[] NetMQReceiveBytes(string connectionString)
         {
-            byte[] recvData = new byte[1024 * 1000];
-            using (TcpClient client = new TcpClient(AddressFamily.InterNetwork))
+            using (SubscriberSocket subSocket = new SubscriberSocket())
             {
-                IPAddress DimensionHostIpAddress = IPAddress.Parse(Config.DimensionIp);
-                //IPAddress DimensionHostIpAddress = IPAddress.Parse(ip);
-                client.Connect(DimensionHostIpAddress, Config.DimensionPort);
-                //client.Connect(DimensionHostIpAddress, port);
+                subSocket.Connect(connectionString);
 
-                using (NetworkStream clientStream = client.GetStream())
-                {
-                    clientStream.Read(recvData, 0, recvData.Length);
-                    return recvData;
-                }
+                subSocket.Subscribe(String.Empty);
+                byte[] result = subSocket.ReceiveFrameBytes();
+
+                return result;
             }
         }
+
+        //public byte[] TcpReceiveBytes()
+        ////public byte[] TcpReceiveBytes(string Ip, int port)
+        //{
+        //    byte[] recvData = new byte[1024 * 1000];
+        //    using (TcpClient client = new TcpClient(AddressFamily.InterNetwork))
+        //    {
+        //        IPAddress DimensionHostIpAddress = IPAddress.Parse(Config.DimensionIp);
+        //        //IPAddress DimensionHostIpAddress = IPAddress.Parse(ip);
+        //        client.Connect(DimensionHostIpAddress, Config.DimensionPort);
+        //        //client.Connect(DimensionHostIpAddress, port);
+
+        //        using (NetworkStream clientStream = client.GetStream())
+        //        {
+        //            clientStream.Read(recvData, 0, recvData.Length);
+        //            return recvData;
+        //        }
+        //    }
+        //}
         public void ReceiveScrapeMessage(string message)
         {
             JObject JMessage = (JObject)JsonConvert.DeserializeObject(message);
@@ -83,8 +96,9 @@ namespace TUDS报文接收
             path.WriteFile(message);
         }
 
-        public void ReceiveDimensionMessage(byte[] message)
+        public void ReceiveDimensionMessage(string value)
         {
+            byte[] message = Encoding.Default.GetBytes(value);
             DimensionInfo dimension = DimensionInfo.Analyze(message);
             string Time = dimension.BaseInfo.DetectionTime;
             string path = Path.Combine(Config.DirectoryPath, Time + "Dimension.txt");
@@ -144,11 +158,11 @@ namespace TUDS报文接收
             };
             Action dimensionAction = () =>
             {
-                while(true)
+                while (true)
                 {
                     try
                     {
-                        byte[] dimension = TcpReceiveBytes();
+                        string dimension = NetMQReceiveString(Config.DimensionAddress);
                         ReceiveDimensionMessage(dimension);
                     }
                     catch (Exception e)
