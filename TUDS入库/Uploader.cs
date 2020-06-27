@@ -35,6 +35,9 @@ namespace TUDS入库
                 List<VEHICLE> vehicles = new List<VEHICLE>();
                 List<WHEEL> wheels = new List<WHEEL>();
                 List<FAULT> faults = new List<FAULT>();
+                List<SCRAPE_DATA> scrape_data = new List<SCRAPE_DATA>();
+                List<DIMENSION_DATA> dimension_data = new List<DIMENSION_DATA>();
+                List<INSPECTION_DATA> inspection_data = new List<INSPECTION_DATA>();
 
                 MakeTrain(train);
                 if (dimensionInfo.BaseInfo.IsExceed == "有超标")
@@ -248,7 +251,7 @@ namespace TUDS入库
                                 QR = coach.Wheels.Index(j).QR.Round(),
                                 RIM_THICKNESS_ALARMLEVEL = 0,
                                 RIM_THICKNESS = coach.Wheels.Index(j).RimThickness.Round(),
-                                TREAD_WEAR = coach.Wheels.Index(j).RimThickness.Round(),
+                                TREAD_WEAR = coach.Wheels.Index(j).TreadWear.Round(),
                                 WHEELSET_DISTANCE = coach.Wheels.Index(j).WheelsetDistance.Round()
                             };
                             wheels.Add(wheel);

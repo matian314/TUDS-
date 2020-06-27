@@ -17,6 +17,7 @@ namespace TUDS入库
         public TRAIN()
         {
             this.VEHICLE = new HashSet<VEHICLE>();
+            this.INSPECTION_DATA = new HashSet<INSPECTION_DATA>();
         }
     
         public string ID { get; set; }
@@ -83,5 +84,6 @@ namespace TUDS入库
         public virtual BUREAUDICT BUREAUDICT { get; set; }
         public virtual SITES SITES { get; set; }
         public virtual ICollection<VEHICLE> VEHICLE { get; set; }
+        public virtual ICollection<INSPECTION_DATA> INSPECTION_DATA { get; set; }
     }
 }

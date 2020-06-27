@@ -76,7 +76,7 @@ namespace TUDS报文接收
             else if (JMessage["Type"].ToString().Trim() == "TrainRecord")
             {
                 string Time = JMessage["Time"].ToString();
-                string path = Path.Combine(Config.DirectoryPath, Time + "Scrape.txt");
+                string path = Path.Combine(Config.ReceiveDirectory, Time + "Scrape.txt");
                 path.WriteFile(message);
             }
         }
@@ -84,7 +84,7 @@ namespace TUDS报文接收
         public void ReceiveAeiMessage(string message)
         {
             string Time = message.Split(',')[2].Replace(" ", "").Replace(":", "");
-            string path = Path.Combine(Config.DirectoryPath, Time + "AEI.txt");
+            string path = Path.Combine(Config.ReceiveDirectory, Time + "AEI.txt");
             path.WriteFile(message);
         }
 
@@ -92,7 +92,7 @@ namespace TUDS报文接收
         {
             JObject JMessage = (JObject)JsonConvert.DeserializeObject(message);
             string Time = JMessage["Time"].ToString();
-            string path = Path.Combine(Config.DirectoryPath, Time + "Inspection.txt");
+            string path = Path.Combine(Config.ReceiveDirectory, Time + "Inspection.txt");
             path.WriteFile(message);
         }
 
@@ -101,7 +101,7 @@ namespace TUDS报文接收
             byte[] message = Encoding.Default.GetBytes(value);
             DimensionInfo dimension = DimensionInfo.Analyze(message);
             string Time = dimension.BaseInfo.DetectionTime;
-            string path = Path.Combine(Config.DirectoryPath, Time + "Dimension.txt");
+            string path = Path.Combine(Config.ReceiveDirectory, Time + "Dimension.txt");
             path.WriteFile(JsonConvert.SerializeObject(dimension));
         }
 

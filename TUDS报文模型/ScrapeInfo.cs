@@ -50,7 +50,7 @@ namespace TUDS报文模型
             scrapeInfo.Time = time.ToString("yyyyMMddHHmmss");
             for (int i = 0; i < axleCount * 2; i++)
             {
-                scrapeInfo.Wheels.Add(new ScrapeWheel());
+                scrapeInfo.Wheels.Add(new ScrapeWheel() { Status = "T"});
             }
             return scrapeInfo;
         }

@@ -17,6 +17,8 @@ namespace TUDS入库
         public WHEEL()
         {
             this.FAULT = new HashSet<FAULT>();
+            this.DIMENSION_DATA = new HashSet<DIMENSION_DATA>();
+            this.SCRAPE_DATA = new HashSet<SCRAPE_DATA>();
         }
     
         public string ID { get; set; }
@@ -55,5 +57,7 @@ namespace TUDS入库
     
         public virtual ICollection<FAULT> FAULT { get; set; }
         public virtual VEHICLE VEHICLE { get; set; }
+        public virtual ICollection<DIMENSION_DATA> DIMENSION_DATA { get; set; }
+        public virtual ICollection<SCRAPE_DATA> SCRAPE_DATA { get; set; }
     }
 }

@@ -67,11 +67,20 @@
     <Compile Include="DEVICE_STATUS.cs">
       <DependentUpon>TudsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DIMENSION_DATA.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FAULT.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INSPECTION_DATA.cs">
       <DependentUpon>TudsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RECHECKS.cs">
+      <DependentUpon>TudsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SCRAPE_DATA.cs">
       <DependentUpon>TudsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SCRAPE_DEVICE_STATUS.cs">

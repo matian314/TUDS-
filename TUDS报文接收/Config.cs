@@ -11,7 +11,8 @@ namespace TUDS报文接收
         public static string ScrapeAddress { get; }
         public static string AeiAddress { get; }
         public static string DimensionAddress { get; }
-        public static string DirectoryPath{ get;}
+        public static string UploadDirectory{ get;}
+        public static string ReceiveDirectory { get; }
         public static string BackUpPath { get; }
         static Config()
         {
@@ -21,12 +22,14 @@ namespace TUDS报文接收
                 ScrapeAddress = ConfigurationManager.AppSettings["擦伤网络地址"];
                 AeiAddress = ConfigurationManager.AppSettings["AEI网络地址"];
                 DimensionAddress = ConfigurationManager.AppSettings["几何尺寸网络地址"];
-                DirectoryPath = ConfigurationManager.AppSettings["报文合成"];
+                UploadDirectory = ConfigurationManager.AppSettings["报文合成"];
+                ReceiveDirectory = ConfigurationManager.AppSettings["报文接收"];
                 BackUpPath = ConfigurationManager.AppSettings["报文备份"];
                 //create if directory doesn't exist
-                DirectoryPath = Directory.CreateDirectory(DirectoryPath).FullName;
+                UploadDirectory = Directory.CreateDirectory(UploadDirectory).FullName;
                 BackUpPath = Directory.CreateDirectory(BackUpPath).FullName;
-                if(DirectoryPath == BackUpPath)
+                ReceiveDirectory = Directory.CreateDirectory(ReceiveDirectory).FullName;
+                if (UploadDirectory == BackUpPath)
                 {
                     throw new ArgumentException("备份路径不能和合成路径相同");
                 }

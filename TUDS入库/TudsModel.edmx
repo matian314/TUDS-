@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BUREAUDICT">
           <Key>
             <PropertyRef Name="BUREAU_ID" />
@@ -78,6 +78,15 @@
           <Property Name="DISK_SPACE" Type="number" Precision="6" Scale="3" />
           <Property Name="NEXT_CHECK_TIME" Type="date" />
         </EntityType>
+        <EntityType Name="DIMENSION_DATA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="WHEEL_ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="LENGTH" Type="number" Precision="4" Scale="0" />
+          <Property Name="DATA" Type="nclob" />
+        </EntityType>
         <EntityType Name="FAULT">
           <Key>
             <PropertyRef Name="ID" />
@@ -88,6 +97,15 @@
           <Property Name="VALUE" Type="number" Precision="7" Scale="3" Nullable="false" />
           <Property Name="ISRECHECKED" Type="number" Precision="1" Scale="0" Nullable="false" />
           <Property Name="ALARM_LEVEL" Type="number" Precision="1" Scale="0" />
+        </EntityType>
+        <EntityType Name="INSPECTION_DATA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="TRAIN_ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="DATA" Type="nclob" />
+          <Property Name="PROBE_ORDER" Type="number" Precision="4" Scale="0" />
         </EntityType>
         <EntityType Name="RECHECKS">
           <Key>
@@ -102,6 +120,15 @@
           <Property Name="VALUE" Type="number" Precision="7" Scale="3" />
           <Property Name="RECHECK_PERSON" Type="varchar2" MaxLength="20" />
           <Property Name="STATE" Type="varchar2" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="SCRAPE_DATA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="WHEEL_ID" Type="varchar2" MaxLength="36" Nullable="false" />
+          <Property Name="LENGTH" Type="number" Precision="4" Scale="0" />
+          <Property Name="DATA" Type="nclob" />
         </EntityType>
         <EntityType Name="SCRAPE_DEVICE_STATUS">
           <Key>
@@ -308,8 +335,24 @@
           <Property Name="ET" Type="number" Precision="7" Scale="3" />
           <Property Name="OR_VALUE" Type="number" Precision="7" Scale="3" />
         </EntityType>
+        <Association Name="DIMENSION_WHEEL_FK">
+          <End Role="WHEEL" Type="Self.WHEEL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DIMENSION_DATA" Type="Self.DIMENSION_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WHEEL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DIMENSION_DATA">
+              <PropertyRef Name="WHEEL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FAULT_WHEEL_FK">
-          <End Role="WHEEL" Type="Self.WHEEL" Multiplicity="1" />
+          <End Role="WHEEL" Type="Self.WHEEL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="FAULT" Type="Self.FAULT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WHEEL">
@@ -320,8 +363,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="INSPECTION_TRAIN_FK">
+          <End Role="TRAIN" Type="Self.TRAIN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="INSPECTION_DATA" Type="Self.INSPECTION_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAIN">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="INSPECTION_DATA">
+              <PropertyRef Name="TRAIN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="RECHECK_FAULT_ID">
-          <End Role="FAULT" Type="Self.FAULT" Multiplicity="1" />
+          <End Role="FAULT" Type="Self.FAULT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="RECHECKS" Type="Self.RECHECKS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FAULT">
@@ -329,6 +388,20 @@
             </Principal>
             <Dependent Role="RECHECKS">
               <PropertyRef Name="FAULT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SCRAPE_WHEEL_FK">
+          <End Role="WHEEL" Type="Self.WHEEL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SCRAPE_DATA" Type="Self.SCRAPE_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WHEEL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCRAPE_DATA">
+              <PropertyRef Name="WHEEL_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -406,21 +479,36 @@
           <EntitySet Name="BUREAUDICT" EntityType="Self.BUREAUDICT" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="CAR_TYPE" EntityType="Self.CAR_TYPE" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="DEVICE_STATUS" EntityType="Self.DEVICE_STATUS" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="DIMENSION_DATA" EntityType="Self.DIMENSION_DATA" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="FAULT" EntityType="Self.FAULT" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="INSPECTION_DATA" EntityType="Self.INSPECTION_DATA" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="RECHECKS" EntityType="Self.RECHECKS" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <EntitySet Name="SCRAPE_DATA" EntityType="Self.SCRAPE_DATA" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="SCRAPE_DEVICE_STATUS" EntityType="Self.SCRAPE_DEVICE_STATUS" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="SITES" EntityType="Self.SITES" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="STATISTICS" EntityType="Self.STATISTICS" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="TRAIN" EntityType="Self.TRAIN" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="VEHICLE" EntityType="Self.VEHICLE" Schema="TUDS_MANAGER" store:Type="Tables" />
           <EntitySet Name="WHEEL" EntityType="Self.WHEEL" Schema="TUDS_MANAGER" store:Type="Tables" />
+          <AssociationSet Name="DIMENSION_WHEEL_FK" Association="Self.DIMENSION_WHEEL_FK">
+            <End Role="WHEEL" EntitySet="WHEEL" />
+            <End Role="DIMENSION_DATA" EntitySet="DIMENSION_DATA" />
+          </AssociationSet>
           <AssociationSet Name="FAULT_WHEEL_FK" Association="Self.FAULT_WHEEL_FK">
             <End Role="WHEEL" EntitySet="WHEEL" />
             <End Role="FAULT" EntitySet="FAULT" />
           </AssociationSet>
+          <AssociationSet Name="INSPECTION_TRAIN_FK" Association="Self.INSPECTION_TRAIN_FK">
+            <End Role="TRAIN" EntitySet="TRAIN" />
+            <End Role="INSPECTION_DATA" EntitySet="INSPECTION_DATA" />
+          </AssociationSet>
           <AssociationSet Name="RECHECK_FAULT_ID" Association="Self.RECHECK_FAULT_ID">
             <End Role="FAULT" EntitySet="FAULT" />
             <End Role="RECHECKS" EntitySet="RECHECKS" />
+          </AssociationSet>
+          <AssociationSet Name="SCRAPE_WHEEL_FK" Association="Self.SCRAPE_WHEEL_FK">
+            <End Role="WHEEL" EntitySet="WHEEL" />
+            <End Role="SCRAPE_DATA" EntitySet="SCRAPE_DATA" />
           </AssociationSet>
           <AssociationSet Name="TRAIN_BUREAU_FK" Association="Self.TRAIN_BUREAU_FK">
             <End Role="BUREAUDICT" EntitySet="BUREAUDICT" />
@@ -443,8 +531,7 @@
             <End Role="WHEEL" EntitySet="WHEEL" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -667,6 +754,7 @@
           <NavigationProperty Name="BUREAUDICT" Relationship="Self.TRAIN_BUREAU_FK" FromRole="TRAIN" ToRole="BUREAUDICT" />
           <NavigationProperty Name="SITES" Relationship="Self.TRAIN_SITE_FK" FromRole="TRAIN" ToRole="SITES" />
           <NavigationProperty Name="VEHICLE" Relationship="Self.VEHICLE_TRAIN_FK" FromRole="TRAIN" ToRole="VEHICLE" />
+          <NavigationProperty Name="INSPECTION_DATA" Relationship="Model.INSPECTION_TRAIN_FK" FromRole="TRAIN" ToRole="INSPECTION_DATA" />
         </EntityType>
         <EntityType Name="VEHICLE">
           <Key>
@@ -764,6 +852,8 @@
           <Property Name="OR_VALUE" Type="Decimal" Precision="7" Scale="3" />
           <NavigationProperty Name="FAULT" Relationship="Self.FAULT_WHEEL_FK" FromRole="WHEEL" ToRole="FAULT" />
           <NavigationProperty Name="VEHICLE" Relationship="Self.WHEEL_VEHICLE_FK" FromRole="WHEEL" ToRole="VEHICLE" />
+          <NavigationProperty Name="DIMENSION_DATA" Relationship="Model.DIMENSION_WHEEL_FK" FromRole="WHEEL" ToRole="DIMENSION_DATA" />
+          <NavigationProperty Name="SCRAPE_DATA" Relationship="Model.SCRAPE_WHEEL_FK" FromRole="WHEEL" ToRole="SCRAPE_DATA" />
         </EntityType>
         <Association Name="TRAIN_BUREAU_FK">
           <End Role="BUREAUDICT" Type="Self.BUREAUDICT" Multiplicity="0..1">
@@ -899,7 +989,94 @@
             <End Role="VEHICLE" EntitySet="VEHICLE" />
             <End Role="WHEEL" EntitySet="WHEEL" />
           </AssociationSet>
+          <EntitySet Name="DIMENSION_DATA" EntityType="Model.DIMENSION_DATA" />
+          <EntitySet Name="INSPECTION_DATA" EntityType="Model.INSPECTION_DATA" />
+          <EntitySet Name="SCRAPE_DATA" EntityType="Model.SCRAPE_DATA" />
+          <AssociationSet Name="DIMENSION_WHEEL_FK" Association="Model.DIMENSION_WHEEL_FK">
+            <End Role="WHEEL" EntitySet="WHEEL" />
+            <End Role="DIMENSION_DATA" EntitySet="DIMENSION_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="INSPECTION_TRAIN_FK" Association="Model.INSPECTION_TRAIN_FK">
+            <End Role="TRAIN" EntitySet="TRAIN" />
+            <End Role="INSPECTION_DATA" EntitySet="INSPECTION_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="SCRAPE_WHEEL_FK" Association="Model.SCRAPE_WHEEL_FK">
+            <End Role="WHEEL" EntitySet="WHEEL" />
+            <End Role="SCRAPE_DATA" EntitySet="SCRAPE_DATA" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="DIMENSION_DATA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="WHEEL_ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="LENGTH" Type="Int16" />
+          <Property Name="DATA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WHEEL" Relationship="Model.DIMENSION_WHEEL_FK" FromRole="DIMENSION_DATA" ToRole="WHEEL" />
+        </EntityType>
+        <EntityType Name="INSPECTION_DATA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="TRAIN_ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="DATA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PROBE_ORDER" Type="Int16" />
+          <NavigationProperty Name="TRAIN" Relationship="Model.INSPECTION_TRAIN_FK" FromRole="INSPECTION_DATA" ToRole="TRAIN" />
+        </EntityType>
+        <EntityType Name="SCRAPE_DATA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="WHEEL_ID" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="LENGTH" Type="Int16" />
+          <Property Name="DATA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WHEEL" Relationship="Model.SCRAPE_WHEEL_FK" FromRole="SCRAPE_DATA" ToRole="WHEEL" />
+        </EntityType>
+        <Association Name="DIMENSION_WHEEL_FK">
+          <End Type="Model.WHEEL" Role="WHEEL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.DIMENSION_DATA" Role="DIMENSION_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WHEEL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DIMENSION_DATA">
+              <PropertyRef Name="WHEEL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="INSPECTION_TRAIN_FK">
+          <End Type="Model.TRAIN" Role="TRAIN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.INSPECTION_DATA" Role="INSPECTION_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAIN">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="INSPECTION_DATA">
+              <PropertyRef Name="TRAIN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SCRAPE_WHEEL_FK">
+          <End Type="Model.WHEEL" Role="WHEEL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.SCRAPE_DATA" Role="SCRAPE_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WHEEL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SCRAPE_DATA">
+              <PropertyRef Name="WHEEL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1217,6 +1394,36 @@
                 <ScalarProperty Name="WHEEL_ORDER" ColumnName="WHEEL_ORDER" />
                 <ScalarProperty Name="ET" ColumnName="ET" />
                 <ScalarProperty Name="OR_VALUE" ColumnName="OR_VALUE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DIMENSION_DATA">
+            <EntityTypeMapping TypeName="Model.DIMENSION_DATA">
+              <MappingFragment StoreEntitySet="DIMENSION_DATA">
+                <ScalarProperty Name="DATA" ColumnName="DATA" />
+                <ScalarProperty Name="LENGTH" ColumnName="LENGTH" />
+                <ScalarProperty Name="WHEEL_ID" ColumnName="WHEEL_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INSPECTION_DATA">
+            <EntityTypeMapping TypeName="Model.INSPECTION_DATA">
+              <MappingFragment StoreEntitySet="INSPECTION_DATA">
+                <ScalarProperty Name="PROBE_ORDER" ColumnName="PROBE_ORDER" />
+                <ScalarProperty Name="DATA" ColumnName="DATA" />
+                <ScalarProperty Name="TRAIN_ID" ColumnName="TRAIN_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SCRAPE_DATA">
+            <EntityTypeMapping TypeName="Model.SCRAPE_DATA">
+              <MappingFragment StoreEntitySet="SCRAPE_DATA">
+                <ScalarProperty Name="DATA" ColumnName="DATA" />
+                <ScalarProperty Name="LENGTH" ColumnName="LENGTH" />
+                <ScalarProperty Name="WHEEL_ID" ColumnName="WHEEL_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

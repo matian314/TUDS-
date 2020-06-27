@@ -36,5 +36,8 @@ namespace TUDS入库
         public DbSet<TRAIN> TRAIN { get; set; }
         public DbSet<VEHICLE> VEHICLE { get; set; }
         public DbSet<WHEEL> WHEEL { get; set; }
+        public DbSet<DIMENSION_DATA> DIMENSION_DATA { get; set; }
+        public DbSet<INSPECTION_DATA> INSPECTION_DATA { get; set; }
+        public DbSet<SCRAPE_DATA> SCRAPE_DATA { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace TUDS报文模型
                     aei.Time = DateTime.ParseExact(strTime, "yyyyMMdd HH:mm:ss", null);
                     aei.VehicleCount = int.Parse(line[5]);
                     aei.AxleCount = int.Parse(line[6]);
+                    
                     for (int i = 0; i < aei.VehicleCount; i++)
                     {
                         if (!sr.EndOfStream)

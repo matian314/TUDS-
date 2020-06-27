@@ -11,6 +11,7 @@ using TUDS入库;
 using TUDS匹配策略;
 using ExceptionHelper;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace 主程序
 {
@@ -20,6 +21,7 @@ namespace 主程序
         static void Main(string[] args)
         {
             log4net.Config.XmlConfigurator.Configure();
+            //主程序
             {
                 while (true)
                 {
@@ -39,12 +41,28 @@ namespace 主程序
                     }
                 }
             }
-        }
-        public static void ReceiveAeiMessage(string message)
-        {
-            string Time = message.Split(',')[2].Replace(" ", "").Replace(":", "");
-            string path = Path.Combine(Config.DirectoryPath, Time + "Scrape.txt");
-            path.WriteFile(message);
+            //生成几何尺寸报文的临时代码
+            {
+                //DimensionInfo di;
+                //string directoryPath = @"C:\Users\matian314\Desktop\报文\32";
+                //string[] files = Directory.GetFiles(directoryPath);
+                //foreach (var path in files)
+                //{
+                //    FileInfo file = new FileInfo(path);
+                //    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                //    using (BinaryReader br = new BinaryReader(fs))
+                //    {
+                //        di = DimensionInfo.Analyze(br.ReadBytes((int)fs.Length));
+
+                //    }
+                //    string destPath = Path.Combine(@"G:\几何尺寸报文\32轴", file.Name + "Dimension.txt");
+                //    string content = JsonConvert.SerializeObject(di);
+                //    destPath.WriteFile(content);
+                //    Console.WriteLine("完成");
+                //    Console.ReadKey();
+                //}
+
+            }
         }
     }
 

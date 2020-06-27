@@ -169,11 +169,11 @@ namespace TUDS匹配策略
             {
                 throw new Exception("AEI,探伤，几何尺寸，擦伤报文均不存在，无法入库");
             }
-            if(axleCount >= 22 && axleCount <= 42)
+            if (axleCount >= 22 && axleCount <= 42)
             {
                 axleCount = 32;
             }
-            else if(axleCount > 42 && axleCount <= 74)
+            else if (axleCount > 42 && axleCount <= 74)
             {
                 axleCount = 64;
             }
@@ -214,7 +214,7 @@ namespace TUDS匹配策略
                 inspection = InspectionInfo.Create(InspectionFile);
             }
             var loader = new Uploader(scrape, dimension, inspection, aei);
-                loader.Insert();
+            loader.Insert();
 
 
             Clear();
@@ -224,21 +224,23 @@ namespace TUDS匹配策略
         /// </summary>
         private static void Clear()
         {
+            string newPath = Path.Combine(BackUpPath, DateTime.Now.ToString("yyyyMMddHHmmss"));
+            Directory.CreateDirectory(newPath);
             if (ScrapeFile != null)
             {
-                File.Move(ScrapeFile.FullName, Path.Combine(BackUpPath, ScrapeFile.Name));
+                File.Move(ScrapeFile.FullName, Path.Combine(newPath, ScrapeFile.Name));
             }
             if (DimensionFile != null)
             {
-                File.Move(DimensionFile.FullName, Path.Combine(BackUpPath, DimensionFile.Name));
+                File.Move(DimensionFile.FullName, Path.Combine(newPath, DimensionFile.Name));
             }
             if (AeiFile != null)
             {
-                File.Move(AeiFile.FullName, Path.Combine(BackUpPath, AeiFile.Name));
+                File.Move(AeiFile.FullName, Path.Combine(newPath, AeiFile.Name));
             }
             if (InspectionFile != null)
             {
-                File.Move(InspectionFile.FullName, Path.Combine(BackUpPath, InspectionFile.Name));
+                File.Move(InspectionFile.FullName, Path.Combine(newPath, InspectionFile.Name));
             }
 
             ScrapeFile = null;
